@@ -158,6 +158,46 @@
       background-size: cover; background-position: center; background-repeat: no-repeat;
     }
     #services h2, #services .lead{ color:#fff; text-shadow:0 2px 8px rgba(0,0,0,.25); }
+    
+    /* --- START: 申請 / 聯絡區背景 (New) --- */
+    #contact{
+      position: relative;
+      background: var(--brand-dark); /* Fallback color */
+      isolation: isolate;
+      color: #fff; /* Set main text color to white */
+      text-shadow: 0 1px 4px rgba(0,0,0,.2);
+    }
+    #contact::before{
+      content: "";
+      position: absolute; inset: 0; z-index: -1;
+      background-image:
+        linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.55)), /* Darker overlay for high contrast */
+        url("https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E7%94%B3%E8%AB%8B%E5%8A%A0%E5%85%A5%E8%83%8C%E6%99%AF%E5%9C%96.png");
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+    }
+    #contact .cards{ 
+      gap: 30px;
+    }
+    #contact .card{
+      background: rgba(255, 255, 255, 0.15); /* Semi-transparent card background */
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 6px 20px rgba(0,0,0,.4);
+      padding: 30px;
+    }
+    #contact .card h3, #contact .card p{
+      color: #fff; /* Ensure card text is white */
+      text-shadow: none;
+    }
+    /* Ghost button adjustment for dark background in this section */
+    #contact .btn-ghost{
+      border-color:#fff;
+      color:#fff;
+    }
+    #contact .btn-ghost:hover{
+      background:#fff;
+      color:var(--brand-dark); /* Use brand color on hover */
+    }
+    /* --- END: 申請 / 聯絡區背景 --- */
   </style>
 
   <script>
@@ -200,10 +240,11 @@
         <li>
           <a href="#" aria-haspopup="true" aria-expanded="false">UberEats ▾</a>
           <div class="submenu" role="menu" aria-label="UberEats 子選單">
-            <a href="#contact" onclick="go('contact')" data-cta="nav_quickjoin">快速加入</a>
-            <a href="#process" onclick="go('process')" data-cta="nav_front">前台教學</a>
-            <a href="#process" onclick="go('process')" data-cta="nav_back">後台教學</a>
-            <a href="#faq" onclick="go('faq')" data-cta="nav_support">各類客服</a>
+            <!-- 以下四個連結已暫時停用，不跳轉到任何位置 -->
+            <a href="javascript:void(0)" data-cta="nav_quickjoin">快速加入</a>
+            <a href="javascript:void(0)" data-cta="nav_front">前台教學</a>
+            <a href="javascript:void(0)" data-cta="nav_back">後台教學</a>
+            <a href="javascript:void(0)" data-cta="nav_support">各類客服</a>
           </div>
         </li>
         <li><a href="#contact" onclick="go('contact')" data-cta="nav_form">申請表單</a></li>
@@ -318,7 +359,7 @@
     <div class="container">
       <h2>常見問題 FAQ</h2>
 
-      <details>
+      <details open>
         <summary>申辦 UberEats 商家費用是多少？</summary>
         <p><b>免申辦費</b>。我們會以 <b>最優惠方案為原則</b> 為店家申辦；實際費率與合約條款由 Uber Eats 官方依平台規定辦理。</p>
       </details>
@@ -343,11 +384,31 @@
         <p><b>不收上架費或代辦費。</b> 平台合約與費率由 Uber Eats 依規定辦理；不同季度／行政區可能略有差異，<b>我們會為商家擇優</b>。</p>
       </details>
 
-      <div class="cta" style="margin-top:12px">
     </div>
   </section>
 
-  
+  <!-- 申請 / 聯絡 -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2>立即申請 / 聯絡我們</h2>
+      <p class="lead">留下資料，我們將於 <b>1 個工作日</b> 內與您聯繫。</p>
+      <div class="cards">
+        <div class="card">
+          <h3>線上表單</h3>
+          <p>請點擊下方按鈕填寫申請資料。</p>
+          <!-- FORM URL Updated -->
+          <a class="btn btn-primary" href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="form">前往申請表單</a>
+        </div>
+        <div class="card">
+          <h3>LINE 諮詢</h3>
+          <p>一鍵加入官方 LINE，留下「店名」與專人即時諮詢。</p>
+          <!-- LINE URL Updated -->
+          <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="line">加入 LINE</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 異業結盟 -->
   <section id="partners" class="section">
     <div class="container">
@@ -370,5 +431,4 @@
   </footer>
 
 </body>
-
 </html>
