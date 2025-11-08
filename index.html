@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index,follow,max-image-preview:large">
   <meta name="format-detection" content="telephone=no,address=no,email=no">
   <meta name="theme-color" content="#115e59">
@@ -58,7 +58,7 @@
   <meta name="twitter:image" content="https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E8%B6%85%E9%81%8E11000%2B%E5%95%86%E5%AE%B6%E7%9A%84%E8%82%AF%E5%AE%9A.png">
 
   <!-- ====== Favicon（SVG 資料 URI） ====== -->
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23115e59'/%3E%3Ctext x='50' y='60' font-size='56' text-anchor='middle' fill='white' font-family='Arial'%3E聯%3C/text%3E%3C/svg%3E">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23115e59'/%3E%3Ctext x='50' y='60' font-size='56' text-anchor='middle' fill='white' font-family='Arial'%3E%E8%81%AF%3C/text%3E%3C/svg%3E">
 
   <!-- ====== 結構化資料：Organization + Website + FAQ + HowTo ====== -->
   <script type="application/ld+json">
@@ -255,10 +255,151 @@
     #contact .card h3,#contact .card p{color:#fff;text-shadow:none}
     #contact .btn-ghost{border-color:#fff;color:#fff}
     #contact .btn-ghost:hover{background:#fff;color:var(--brand-dark)}
+
+    /* ====== 異業結盟輪播 (Carousel) 樣式 - 針對 1600x500 圖片進行優化 ====== */
+    .carousel-container {
+      position: relative;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 1100px; /* 增加最大寬度以適應更寬的圖片 */
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+      width: 500%; /* 5 slides */
+    }
+    .carousel-slide {
+      width: 20%; /* 100% / 5 slides */
+      flex-shrink: 0;
+    }
+    .carousel-slide img {
+      width: 100%;
+      height: auto;
+      display: block;
+      /* 圖片長寬比: 1600x500 (3.2:1) - 修正以消除多餘的背景空白 */
+      aspect-ratio: 1600 / 500; 
+      object-fit: contain;
+    }
+    .carousel-dots {
+      text-align: center;
+      padding: 10px 0;
+      position: absolute;
+      bottom: 10px;
+      left: 0;
+      right: 0;
+      z-index: 10;
+    }
+    .carousel-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 0 5px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+    .carousel-dot.active {
+      background: var(--brand-dark);
+      transform: scale(1.2);
+      box-shadow: 0 0 0 2px #fff;
+    }
+    
+    /* ====== 客製化圖片尺寸調整 ====== */
+
+    /* 圖片 1: KPI Block (60%) */
+    #kpi-block .media-image {
+        display: flex;
+        justify-content: center; /* 在 grid cell 中置中 */
+    }
+    #kpi-block .media-image img {
+        width: 60%; /* 縮小至容器寬度的 60% */
+        /* 確保在小螢幕下有足夠的可見度，若需要可以調整 */
+        max-width: 100%;
+    }
+
+    /* 圖片 2: Process Block (80%) */
+    #process .media-image {
+        display: flex;
+        justify-content: center; /* 在 grid cell 中置中 */
+    }
+    #process .media-image img {
+        width: 80%; /* 縮小至容器寬度的 80% */
+        max-width: 100%;
+    }
+
   </style>
 
   <script>
     function go(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+    /**
+     * 圖片輪播初始化函數
+     * @param {string} trackId - 輪播軌道元素的 ID
+     * @param {string} dotsId - 導航點容器的 ID
+     * @param {number} slideCount - 總投影片數量
+     * @param {number} interval - 自動播放間隔時間 (毫秒)
+     */
+    function initializeCarousel(trackId, dotsId, slideCount, interval = 5000) {
+      const track = document.getElementById(trackId);
+      const dotsContainer = document.getElementById(dotsId);
+      let currentSlide = 0;
+      let timer;
+
+      if (!track || !dotsContainer || slideCount === 0) return;
+
+      // 1. 產生導航點 (Dots)
+      for (let i = 0; i < slideCount; i++) {
+          const dot = document.createElement('span');
+          dot.classList.add('carousel-dot');
+          dot.setAttribute('data-slide-to', i);
+          dot.setAttribute('aria-label', `前往第 ${i + 1} 張投影片`);
+          dot.addEventListener('click', () => {
+              goToSlide(i);
+              resetAutoPlay();
+          });
+          dotsContainer.appendChild(dot);
+      }
+
+      const dots = dotsContainer.querySelectorAll('.carousel-dot');
+
+      // 2. 核心投影片切換功能
+      function goToSlide(index) {
+          currentSlide = (index + slideCount) % slideCount; // 確保索引在 0 到 slideCount-1 之間
+          const offset = -currentSlide * (100 / slideCount);
+          track.style.transform = `translateX(${offset}%)`;
+
+          // 更新啟用中的導航點
+          dots.forEach(dot => dot.classList.remove('active'));
+          if(dots[currentSlide]) {
+             dots[currentSlide].classList.add('active');
+          }
+      }
+
+      // 3. 自動播放
+      function startAutoPlay() {
+          timer = setInterval(() => {
+              goToSlide(currentSlide + 1);
+          }, interval);
+      }
+
+      // 4. 重設自動播放 (當用戶手動點擊時)
+      function resetAutoPlay() {
+          clearInterval(timer);
+          startAutoPlay();
+      }
+      
+      // 初始化設定
+      goToSlide(0);
+      startAutoPlay();
+    }
+
     document.addEventListener('DOMContentLoaded', ()=>{
       const ham=document.querySelector('.hamburger'); const menu=document.getElementById('mainmenu');
       if(ham&&menu){
@@ -276,6 +417,9 @@
           window.dataLayer.push({event:'cta_click', cta:el.dataset.cta, href:el.getAttribute('href')||'', text:el.textContent.trim()});
         });
       }
+      
+      // ====== 輪播初始化 (5 張圖片) ======
+      initializeCarousel('partners-carousel-track', 'partners-carousel-dots', 5, 5000);
     });
   </script>
 </head>
@@ -326,14 +470,39 @@
           <a class="btn btn-primary" href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="apply_primary">立即申請</a>
           <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="learn_flow">立即諮詢</a>
         </div>
-        <p class="assure" style="font-size:14px">* 本服務協助店家上線 Uber Eats；審核與費率由 Uber Eats 依平台規定辦理。</p>
+        <p class="assure" style="font-size:14px">* 本服務協助店家上線 Uber Eats；審核與費率由 Uber Eats 官方依平台規定辦理。</p>
       </div>
     </section>
+
+        <!-- 輪播容器：展示 UberEats 合作優勢 -->
+        <div class="carousel-container" role="region" aria-label="UberEats 合作優勢輪播">
+          <div class="carousel-track" id="partners-carousel-track">
+            <div class="carousel-slide" aria-role="img" aria-label="使用 UberEats 觸及更多消費者">
+              <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/1-2使用UberEats觸及更多消費者.png" alt="使用 UberEats 觸及更多消費者" width="1600" height="500" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-role="img" aria-label="值得信賴的外送平台">
+              <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/2-2值得信賴的外送平台.png" alt="值得信賴的外送平台" width="1600" height="500" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-role="img" aria-label="UberEats 雙週匯款">
+              <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/3-2UberEats雙周匯款.png" alt="UberEats 雙週匯款，資金運用靈活" width="1600" height="500" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-role="img" aria-label="強大的操作系統">
+              <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/4-2強大的操作系統.png" alt="UberEats 平台提供強大的操作系統與數據分析" width="1600" height="500" loading="lazy">
+            </div>
+            <div class="carousel-slide" aria-role="img" aria-label="成本效益最大化">
+              <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/5-2成本效益最大化.png" alt="UberEats 協助您成本效益最大化" width="1600" height="500" loading="lazy">
+            </div>
+          </div>
+          <!-- 導航點容器，由 JS 自動生成點擊元素 -->
+          <div class="carousel-dots" id="partners-carousel-dots">
+          </div>
+        </div>
 
     <!-- KPI -->
     <section id="kpi-block" class="section on-green" aria-label="商家肯定指標">
       <div class="container-wide media-grid">
         <div class="media-image">
+          <!-- 圖片 1：已套用 60% 寬度 CSS 規則 -->
           <img
             src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E8%B6%85%E9%81%8E11000%2B%E5%95%86%E5%AE%B6%E7%9A%84%E8%82%AF%E5%AE%9A.png"
             alt="超過 11000 家 UberEats 商家選擇餐聯顧問" width="1200" height="1600"
@@ -354,6 +523,9 @@
       </div>
     </section>
 
+
+        <!-- 輪播結束 -->
+
     <!-- Process -->
     <section id="process" class="section" aria-labelledby="process-title">
       <div class="container-wide media-grid">
@@ -361,9 +533,9 @@
           <h2 id="process-title" style="font-size:28px;font-weight:900;">完整上線協作｜交給我們，你專心顧店</h2>
           <ul class="bullets" style="margin:8px 0 0 0; padding-left:18px;">
             <li><b>文件與合約：</b>線上簽署、重點文件檢核，減少重工</li>
-            <li><b>餐點素材：</b>至少五張<strong>餐點照片</strong>與菜單建置指引</li>
+            <li><b>餐點素材：：</b>至少五張<strong>餐點照片</strong>與菜單建置指引</li>
             <li><b>設定教學：</b>門市資訊、接單設定、平板寄送與啟用</li>
-            <li><b>專人說明：</b>全程解答問題，<u>流程清楚透明</u>，再送件</li>
+            <li><b>專人說明：：</b>全程解答問題，<u>流程清楚透明</u>，再送件</li>
           </ul>
           <p class="fineprint" style="font-size:13px;color:#6b7280;margin-top:8px;">* 常見時程約七個工作天（供參考，實際依資料完整度與拍攝/審核檔期而定）。審核與合約由 Uber Eats 官方負責。</p>
           <div class="cta" style="justify-content:flex-start; gap:12px; margin-top:10px;">
@@ -372,6 +544,7 @@
           </div>
         </div>
         <div class="media-image">
+          <!-- 圖片 2：已套用 80% 寬度 CSS 規則 -->
           <img
             src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/UberEats%E5%95%86%E5%AE%B6%E7%94%B3%E8%AB%8B%E6%B5%81%E7%A8%8B.png"
             alt="UberEats 商家申請流程圖：合約寄送 → 菜單與餐點照片 → 建檔文件上傳 → 上線接單與平板寄送"
@@ -436,11 +609,14 @@
       </div>
     </section>
 
-    <!-- Partners -->
+    <!-- Partners (已優化輪播比例) -->
     <section id="partners" class="section" aria-labelledby="partners-title">
       <div class="container">
         <h2 id="partners-title">異業結盟</h2>
         <p class="lead">歡迎各類品牌 / 設備商 / 金流系統 / 設計社群洽談合作。</p>
+
+
+
         <div class="cta" style="margin-top:12px">
           <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="partners_contact">洽談合作</a>
         </div>
@@ -459,4 +635,3 @@
 
 </body>
 </html>
-
