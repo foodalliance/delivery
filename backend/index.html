@@ -1,1 +1,385 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="format-detection" content="telephone=no,address=no,email=no">
+  <meta name="theme-color" content="#115e59">
+
+  <!-- ✅ Google Search Console 驗證 -->
+  <meta name="google-site-verification" content="T8XKJX455Q1EdOc_ia34uDIp7BNKndcGzFHJloKZnTk" />
+
+  <!-- ⚡️ CWV: Preconnect / DNS Prefetch（外部資源主機） -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin>
+  <link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+
+  <!-- ✅ Google Tag Manager（HEAD：修正 createElement） -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KLQ8TGVD');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- ====== 基本 SEO ====== -->
+  <title>UberEats 商家後台登入教學：首次開通與日常管理入口｜餐聯顧問</title>
+  <meta name="description" content="UberEats 商家管理後台（網頁版）完整教學：如何透過歡迎信首次登入、日後登入連結、以及手機版操作指南。">
+  <meta name="keywords" content="UberEats 商家後台, 首次登入, 歡迎信, 網頁版, 商家管理">
+
+  <!-- ====== Canonical & Hreflang ====== -->
+  <link rel="canonical" href="https://foodalliance.github.io/delivery/backoffice/">
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://foodalliance.github.io/delivery/backoffice/">
+  <link rel="alternate" hreflang="x-default" href="https://foodalliance.github.io/delivery/backoffice/">
+
+  <!-- ====== Open Graph (Facebook/LINE) ====== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="餐聯顧問">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="UberEats 商家後台登入教學：首次開通與日常管理入口">
+  <meta property="og:description" content="UberEats 商家管理後台（網頁版）完整教學：如何透過歡迎信首次登入、日後登入連結、以及手機版操作指南。">
+  <meta property="og:image" content="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E7%99%BB%E5%85%A5_%E5%B0%81%E9%9D%A2.jpg">
+  <meta property="og:url" content="https://foodalliance.github.io/delivery/backoffice/">
+
+  <!-- ====== Twitter Card ====== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UberEats 商家後台登入教學：首次開通與日常管理入口">
+  <meta name="twitter:description" content="UberEats 商家管理後台（網頁版）完整教學：如何透過歡迎信首次登入、日後登入連結、以及手機版操作指南。">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E7%99%BB%E5%85%A5_%E5%B0%81%E9%9D%A2.jpg">
+
+  <!-- ====== Favicon（SVG 資料 URI） ====== -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23115e59'/%3E%3Ctext x='50' y='60' font-size='56' text-anchor='middle' fill='white' font-family='Arial'%3E%E8%81%AF%3C/text%3E%3C/svg%3E">
+
+  <!-- ====== 結構化資料：HowTo（後台登入教學） ====== -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "UberEats 商家後台登入與基本設定教學",
+    "description": "如何透過歡迎信首次登入 UberEats 商家後台、日後從固定網址登入，以及手機版操作重點。",
+    "totalTime": "PT5M",
+    "image": "https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E7%99%BB%E5%85%A5_%E5%B0%81%E9%9D%A2.jpg",
+    "tool": [
+      {"@type":"HowToTool","name":"Uber Eats 商家後台（網頁版）"},
+      {"@type":"HowToTool","name":"桌機或手機瀏覽器"}
+    ],
+    "step": [
+      {"@type":"HowToStep","name":"找到歡迎信","text":"於簽約的 Email 信箱尋找 Uber Eats 歡迎信並點擊綠色【登入】按鈕。"},
+      {"@type":"HowToStep","name":"首次登入","text":"若已有 Uber 帳號直接登入；若無，依畫面註冊（電話欄可略過）。"},
+      {"@type":"HowToStep","name":"日後登入入口","text":"完成啟用後，可直接前往 https://restaurant.uber.com 登入管理後台。"},
+      {"@type":"HowToStep","name":"手機版注意","text":"從 LINE 開啟連結時，請選擇【使用預設瀏覽器開啟】，以確保正常登入。"}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{ --brand:#39843b; --brand-dark:#2f6e30; --text:#111827; --muted:#6b7280; --card:#ffffff; --bg:#ffffff; --radius:16px; --shadow:0 8px 28px rgba(0,0,0,.08); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--text);background:var(--bg);line-height:1.65}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    /* Header 共用樣式（shared/header.html 使用相同 class） */
+    header.header{background:linear-gradient(180deg,#fff 0%,#f3f5f7 100%);border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
+    .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#115e59;color:#fff;font-weight:900}
+    .menu{display:flex;gap:22px;align-items:center}
+    .menu > li{list-style:none;position:relative}
+    .menu > li > a{text-decoration:none;color:var(--text);font-weight:700;padding:8px 2px;display:inline-block}
+    .menu > li > a:hover{color:var(--brand)}
+    .menu > li > a:focus{outline:2px solid var(--brand);outline-offset:3px}
+    .submenu{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;min-width:180px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:6px 0;z-index:50}
+    .submenu a{display:block;padding:12px 16px;text-decoration:none;color:var(--text);font-weight:600}
+    .submenu a:hover,.submenu a:focus{background:var(--brand);color:#fff;outline:none}
+    .menu > li:hover .submenu{display:block}
+    .hamburger{display:none;background:#115e59;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:800}
+    @media (max-width:900px){
+      .menu{display:none;position:absolute;right:20px;top:64px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;flex-direction:column;gap:0;width:min(88vw,320px);box-shadow:0 10px 25px rgba(0,0,0,.12);padding:8px 0}
+      .menu > li > a{padding:12px 16px;display:block}
+      .hamburger{display:inline-block}
+      .menu.open{display:flex}
+    }
+
+    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid transparent;font-size:clamp(14px,1.8vw,18px);transition:all .2s ease-in-out}
+    .btn-primary{background:var(--brand-dark);color:#fff}
+    .btn-ghost{background:transparent;border-color:var(--brand-dark);color:var(--brand-dark)}
+    .btn-ghost:hover{background:var(--brand-dark);color:#fff}
+    .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+    .menu .menu-active{color:var(--brand)}
+    .submenu a[aria-current="page"]{background:var(--brand);color:#fff!important}
+    .submenu a[aria-current="page"]:hover{background:var(--brand-dark)}
+
+    /* Hero：使用後台封面圖做深色漸層 */
+    .hero-tutorial{
+      padding:clamp(60px,10vw,120px) 0;text-align:center;
+      background-image:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.7)),url('https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E7%99%BB%E5%85%A5_%E5%B0%81%E9%9D%A2.jpg');
+      background-size:cover;background-position:center;background-repeat:no-repeat;color:#fff
+    }
+    .hero-tutorial h1{font-weight:900;letter-spacing:.3px;font-size:clamp(30px,5vw,48px);line-height:1.12;text-shadow:0 2px 8px rgba(0,0,0,.8)}
+    .hero-tutorial .subtitle{font-size:clamp(16px,2.2vw,22px);color:#e5e7eb;max-width:900px;margin:12px auto 0;text-shadow:0 1px 4px rgba(0,0,0,.8)}
+
+    .section{padding:50px 0}
+    .section h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;margin-bottom:16px;border-bottom:3px solid var(--brand);display:inline-block;padding-bottom:5px}
+    .section h2.no-border{border-bottom:none}
+
+    .media-grid{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:36px;margin-bottom:40px;padding:20px 0}
+    .media-grid:nth-child(odd){grid-template-areas:"content image"}
+    .media-grid:nth-child(even){grid-template-areas:"image content";grid-template-columns:.8fr 1.2fr}
+    .media-content{grid-area:content}
+    .media-image{grid-area:image;display:flex;justify-content:center;align-items:center}
+    .media-image img{width:100%;height:auto;object-fit:contain;border-radius:var(--radius);box-shadow:var(--shadow);max-width:560px}
+    .media-content h3{font-size:24px;font-weight:800;margin-bottom:12px;color:var(--brand-dark)}
+    .media-content ol,.media-content ul{margin-top:10px;padding-left:20px}
+    .media-content li{margin-bottom:10px;font-size:16px}
+    .media-content p strong{color:var(--brand-dark);font-weight:800}
+
+    @media (max-width:900px){
+      .media-grid{grid-template-columns:1fr;grid-template-areas:"image" "content"!important;gap:20px}
+      .media-grid:nth-child(even){grid-template-columns:1fr}
+      .media-image img{max-width:100%}
+    }
+
+    .callout{background:#fffbe7;border-left:5px solid #facc15;padding:16px;border-radius:var(--radius);margin-top:20px}
+    .callout strong{color:#ca8a04}
+
+    /* CTA（招募新店家）磨砂玻璃風格 */
+    .cta-join{
+      background-image:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.7)),url('https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E7%94%B3%E8%AB%8B%E5%8A%A0%E5%85%A5%E8%83%8C%E6%99%AF%E5%9C%96.png');
+      background-size:cover;background-position:center;padding:80px 0;color:#fff;text-align:center;border-top:none!important
+    }
+    .cta-join h2{color:#fff;border-bottom:none;font-size:clamp(30px,4.5vw,42px);margin-bottom:8px}
+    .cta-join .lead{font-size:clamp(18px,2.5vw,24px);margin-bottom:40px;font-weight:300;color:#fff}
+    .cta-join-grid{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:40px}
+    .cta-card{background:rgba(255,255,255,.2);backdrop-filter:blur(12px);color:var(--text);padding:30px;border-radius:var(--radius);max-width:350px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:transform .3s;border:1px solid rgba(255,255,255,.5)}
+    .cta-card:hover{transform:translateY(-5px)}
+    .cta-card h3{font-size:24px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5);margin-bottom:15px}
+    .cta-card p{min-height:50px;color:#e5e5e5}
+    .cta-card .btn{margin-top:20px;width:100%;padding:14px}
+    .cta-card .btn-ghost{background:transparent;border-color:#fff;color:#fff}
+    .cta-card .btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff}
+
+    .footer{border-top:1px solid #e5e7eb;background:#fcfcfd;padding:32px 0;color:#6b7280}
+    .smallprint p{margin:6px 0}
+  </style>
+
+  <script>
+    function go(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      /* 1) 動態載入共用 Header */
+      const mount = document.getElementById('site-header');
+      if (mount) {
+        fetch('/delivery/shared/header.html')
+          .then(res => res.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 高亮目前頁面：「後台教學」
+            const backLink = mount.querySelector('[data-cta="nav_back"], a[href="https://foodalliance.github.io/delivery/backoffice/"], a[href="/delivery/backoffice/"]');
+            if (backLink) {
+              backLink.setAttribute('aria-current','page');
+              backLink.classList.add('menu-active');
+            }
+          })
+          .catch(() => {
+            mount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>';
+          });
+      }
+
+      /* 2) 事件代理：手機漢堡選單 + CTA 打點 */
+      document.addEventListener('click', e=>{
+        const ham = e.target.closest('.hamburger');
+        const menu = document.getElementById('mainmenu');
+        if(ham && menu){
+          const ex = ham.getAttribute('aria-expanded')==='true';
+          ham.setAttribute('aria-expanded', String(!ex));
+          menu.classList.toggle('open');
+        }
+        const el=e.target.closest('[data-cta]');
+        if(el){
+          window.dataLayer=window.dataLayer||[];
+          window.dataLayer.push({event:'cta_click', cta:el.dataset.cta, href:el.getAttribute('href')||'', text:el.textContent.trim()});
+        }
+      });
+
+      document.addEventListener('keydown', e=>{
+        if(e.key==='Escape'){
+          const menu=document.getElementById('mainmenu');
+          const ham=document.querySelector('.hamburger');
+          if(menu&&ham){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.focus(); }
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- ✅ Google Tag Manager（noscript，緊跟在 <body> 後） -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLQ8TGVD"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- 共用 Header 掛載點 -->
+  <div id="site-header" role="navigation" aria-label="主選單"></div>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero-tutorial" aria-labelledby="tutorial-title">
+      <div class="container">
+        <h1 id="tutorial-title">Uber Eats 商家後臺教學</h1>
+        <p class="subtitle">從歡迎信開始啟用您的管理後台帳號，開始管理菜單、數據與設定。</p>
+      </div>
+    </section>
+
+    <!-- 步驟 1 -->
+    <section id="step1" class="section">
+      <div class="container">
+        <h2 class="no-border">💡首次登入 Uber Eats 後台</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>第一步：打開 Email 信箱，找到「歡迎信」</h3>
+            <p>請至您當初簽約時填寫的 Email 信箱，確認收取 Uber Eats 寄發的<b>「歡迎信」</b>。</p>
+            <ol>
+              <li>點擊信件中間的<b>綠色按鈕【登入】</b>即可進入連結。</li>
+            </ol>
+            <p style="margin-top:15px;"><b>🔸 如果您曾用此信箱註冊過 Uber 帳號：</b></p>
+            <ul>
+              <li>→ 點擊信中的【登入】按鈕即可直接進入後台。</li>
+            </ul>
+            <p style="margin-top:15px;"><b>🔹 如果您從來沒有註冊過 Uber 帳號：</b></p>
+            <ul>
+              <li>→ 系統會請您註冊一個帳號，請跟著畫面完成設定。</li>
+              <li><b>【重要】</b> 註冊時，<b>不用輸入電話號碼</b>，請直接按<b>「略過」</b>即可，避免發生錯誤。</li>
+            </ul>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E6%AD%A1%E8%BF%8E%E4%BF%A1%E7%AF%84%E4%BE%8B.jpg" alt="Uber Eats 歡迎信範例畫面">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 2 -->
+    <section id="step2" class="section" style="background:#f9fafb;">
+      <div class="container">
+        <h2 class="no-border">第二步：以後就可以直接從這裡登入後台</h2>
+
+        <div style="text-align:center;margin-bottom:30px;">
+          <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E7%99%BB%E5%85%A5%E7%95%AB%E9%9D%A2.png" alt="Uber Eats 商家後台登入畫面示意" style="max-width:680px;width:100%;height:auto;object-fit:contain;border-radius:var(--radius);box-shadow:var(--shadow);display:inline-block">
+        </div>
+
+        <div style="max-width:680px;margin:0 auto;">
+          <h3>後台登入資訊（建議儲存書籤）</h3>
+          <p>首次啟用帳號後，日後即可直接透過以下網址登入後台：</p>
+          <p style="margin-top:15px;">
+            點這裡：<a href="https://restaurant.uber.com" target="_blank" rel="noopener" data-cta="login_direct_link" class="btn btn-ghost" style="margin:10px 0;">登入 Uber Eats 商家後台</a>
+          </p>
+          <div style="margin-top:20px;padding:15px;border-radius:var(--radius);background:#eef2ff;border:1px solid #c7d2fe;">
+            <p><b>🔐 登入帳號：</b>請輸入您當初簽約時所填寫的 Email（例如：xxxxx@gmail.com）。</p>
+            <p><b>🔑 登入密碼：</b>與您 Uber 帳號的密碼相同（如已設定）。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 3 -->
+    <section id="step3" class="section">
+      <div class="container">
+        <h2>📱💻若您是從 LINE 點擊進入的連結，請注意！</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>請選擇【使用預設瀏覽器開啟】</h3>
+            <p>如果您是從 LINE 聊天室點擊進入的連結，請執行以下步驟：</p>
+            <ol>
+              <li>點選右下角<b>「⋮」</b>選單。</li>
+              <li>選擇<b>【使用預設瀏覽器開啟】</b>。</li>
+            </ol>
+            <div class="callout">
+              <b>重要：</b>這樣可以避免畫面錯誤或無法正常登入的問題，確保順利完成操作。
+            </div>
+            <p style="margin-top:20px;">
+              <b>⚠️ 請勿選擇下方的 Google 或 Apple 登入選項</b>，避免導致登入錯誤，請直接用 Email 登入。
+            </p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E4%BD%BF%E7%94%A8%E9%A0%90%E8%A8%AD%E7%80%8F%E8%A6%BD%E5%99%A8%E9%96%8B%E5%95%9F.png" alt="LINE 內開啟連結時，使用預設瀏覽器的操作示意">
+          </div>
+        </div>
+
+        <div class="media-grid" style="margin-top:40px;">
+          <div class="media-content">
+            <h3>建議使用的瀏覽器</h3>
+            <p>為獲得最佳體驗，建議使用以下瀏覽器開啟後台網頁：</p>
+            <ul>
+              <li><b>Google Chrome</b></li>
+              <li><b>Safari</b>（適用於蘋果裝置）</li>
+            </ul>
+            <p style="margin-top:15px;">後台網頁<b>適用於桌機與手機</b>，讓您隨時隨地管理商店。</p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E7%80%8F%E8%A6%BD%E5%99%A8.jpg" alt="建議使用的瀏覽器圖示">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 4 -->
+    <section id="step4" class="section" style="background:#f9fafb;">
+      <div class="container">
+        <h2>亦可使用手機版登入後台網頁</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>手機版後台首頁與功能</h3>
+            <p>手機版網頁會自動調整介面，讓您快速查看<b>銷售額</b>、<b>訂單數</b>等今日摘要資訊。</p>
+            <p style="margin-top:15px;"><b>點擊左上角的三橫線</b>：</p>
+            <ul>
+              <li>可展開選單，獲取更多資訊如報告、行銷、使用者等。</li>
+            </ul>
+            <p style="margin-top:15px;"><b>點擊右下角客服圖示</b>：</p>
+            <ul>
+              <li>可立即諮詢客服，獲取即時協助。</li>
+            </ul>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/backend/image/%E5%BE%8C%E5%8F%B0%E6%89%8B%E6%A9%9F%E7%89%88.png" alt="Uber Eats 商家後台手機版畫面">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 招募新店 CTA -->
+    <section id="contact" class="section cta-join" role="complementary" aria-labelledby="join-title">
+      <div class="container">
+        <h2 id="join-title">尚未申請加入 Uber Eats 嗎？</h2>
+        <p class="lead">立即填寫申請表單，由專人為您服務！</p>
+
+        <div class="cta-join-grid">
+          <div class="cta-card">
+            <h3>填寫申請表單</h3>
+            <p>請點擊下方按鈕填寫申請資料。</p>
+            <a class="btn btn-primary" href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="tutorial_apply_form">前往申請表單</a>
+          </div>
+
+          <div class="cta-card">
+            <h3>LINE 諮詢申辦</h3>
+            <p>一鍵加入官方 LINE，留下「店名」與專人即時諮詢。</p>
+            <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="tutorial_line_new">加入 LINE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container smallprint">
+      <p><b>本服務協助店家上線 Uber Eats 平台</b>，流程透明；<b>個人資料僅用於申請與服務聯繫</b>。</p>
+      <p><b>免上架費</b>；商家費用與合約條款由 Uber Eats 依平台規定辦理，並依不同季度及行政區差異為您擇優。</p>
+      <p style="font-size:14px">服務範圍：台灣餐廳招募與上線輔導。</p>
+      <p style="font-size:14px">個資用途：僅用於 Uber Eats 申請與服務聯繫，不另作他用。</p>
+    </div>
+  </footer>
+</body>
+</html>
 
