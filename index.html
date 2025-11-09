@@ -163,6 +163,7 @@
     body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--text);background:var(--bg);line-height:1.65}
     .container{max-width:1200px;margin:0 auto;padding:0 20px}
 
+    /* Header 基礎樣式（header.html 會用到同一組 class） */
     header.header{background:linear-gradient(180deg,#fff 0%,#f3f5f7 100%);border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(6px)}
     .nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
     .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
@@ -190,7 +191,7 @@
     .hero .kpi{font-size:clamp(18px,2.6vw,28px);font-weight:900;color:var(--brand-dark);margin-top:16px}
     .hero .assure{font-size:clamp(16px,2vw,20px);color:var(--muted);margin-top:10px}
     .cta{display:flex;gap:14px;justify-content:center;margin-top:22px}
-    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid透明;font-size:clamp(14px,1.8vw,18px)}
+    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid transparent;font-size:clamp(14px,1.8vw,18px)}
     .btn-primary{background:var(--brand-dark);color:#fff}
     .btn-ghost{background:transparent;border-color:var(--brand-dark);color:var(--brand-dark)}
     .btn-ghost:hover{background:var(--brand-dark);color:#fff}
@@ -315,22 +316,40 @@
     }
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      const ham=document.querySelector('.hamburger'); const menu=document.getElementById('mainmenu');
-      if(ham&&menu){
-        ham.addEventListener('click', ()=>{
-          const ex=ham.getAttribute('aria-expanded')==='true';
+      // 動態載入共用 Header（確保用「絕對路徑」指到 /delivery/shared/header.html）
+      const mount = document.getElementById('site-header');
+      if (mount) {
+        fetch('/delivery/shared/header.html')
+          .then(res => res.text())
+          .then(html => { mount.innerHTML = html; })
+          .catch(() => { mount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>'; });
+      }
+
+      // hamburger 事件代理（header 載入後依然有效）
+      document.addEventListener('click', e=>{
+        const ham = e.target.closest('.hamburger');
+        const menu = document.getElementById('mainmenu');
+        if(ham && menu){
+          const ex = ham.getAttribute('aria-expanded')==='true';
           ham.setAttribute('aria-expanded', String(!ex));
           menu.classList.toggle('open');
-        });
-        document.addEventListener('keydown', e=>{
-          if(e.key==='Escape'){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.focus(); }
-        });
-        document.addEventListener('click', e=>{
-          const el=e.target.closest('[data-cta]'); if(!el) return;
+        }
+        const el=e.target.closest('[data-cta]');
+        if(el){
           window.dataLayer=window.dataLayer||[];
           window.dataLayer.push({event:'cta_click', cta:el.dataset.cta, href:el.getAttribute('href')||'', text:el.textContent.trim()});
-        });
-      }
+        }
+      });
+
+      document.addEventListener('keydown', e=>{
+        if(e.key==='Escape'){
+          const menu=document.getElementById('mainmenu');
+          const ham=document.querySelector('.hamburger');
+          if(menu&&ham){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.focus(); }
+        }
+      });
+
+      // 啟動輪播
       initializeCarousel('partners-carousel-track', 'partners-carousel-dots', 5, 5000);
     });
   </script>
@@ -340,54 +359,25 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLQ8TGVD"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-  <!-- Header -->
-<header class="header" role="banner">
-  <div class="container nav">
-    <a class="brand" href="#" aria-label="返回首頁">
-      <div class="logo" aria-hidden="true">聯</div>
-      <span>餐聯顧問 × UberEats 授權合作</span>
-    </a>
-    <button class="hamburger" aria-controls="mainmenu" aria-expanded="false" aria-label="主選單切換">☰</button>
-    <nav aria-label="主選單">
-      <ul class="menu" id="mainmenu">
-        <li><a href="#" onclick="go('top')" data-cta="nav_home">首頁</a></li>
-        <li>
-          <a href="#" aria-haspopup="true" aria-expanded="false">UberEats ▾</a>
-          <div class="submenu" role="menu" aria-label="UberEats 子選單">
-            <!-- ✅ 快速加入：改為導向首頁 -->
-            <a href="https://foodalliance.github.io/delivery/" data-cta="nav_quickjoin">快速加入</a>
-            <!-- 仍導向前台教學外部頁 -->
-            <a href="https://foodalliance.github.io/delivery/frontdesk/" data-cta="nav_front">前台教學</a>
-            <a href="javascript:void(0)" data-cta="nav_back">後台教學</a>
-            <a href="javascript:void(0)" data-cta="nav_support">各類客服</a>
-          </div>
-        </li>
-        <!-- ✅ 申請表單：改為導向 Google 表單 -->
-        <li><a href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="nav_form">申請表單</a></li>
-        <li><a href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="nav_line">加入 LINE</a></li>
-        <li><a href="#partners" onclick="go('partners')" data-cta="nav_partners">異業結盟</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
-
+  <!-- 共用 Header 掛載點：會自動把 /delivery/shared/header.html 插進來 -->
+  <div id="site-header" role="navigation" aria-label="主選單"></div>
 
   <!-- 輪播容器：展示 UberEats 合作優勢 -->
   <div class="carousel-container" role="region" aria-label="UberEats 合作優勢輪播">
     <div class="carousel-track" id="partners-carousel-track">
-      <div class="carousel-slide" aria-role="img" aria-label="使用 UberEats 觸及更多消費者">
+      <div class="carousel-slide" role="img" aria-label="使用 UberEats 觸及更多消費者">
         <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/1-2使用UberEats觸及更多消費者.png" alt="使用 UberEats 觸及更多消費者" width="1600" height="500" loading="lazy">
       </div>
-      <div class="carousel-slide" aria-role="img" aria-label="值得信賴的外送平台">
+      <div class="carousel-slide" role="img" aria-label="值得信賴的外送平台">
         <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/2-2值得信賴的外送平台.png" alt="值得信賴的外送平台" width="1600" height="500" loading="lazy">
       </div>
-      <div class="carousel-slide" aria-role="img" aria-label="UberEats 雙週匯款">
+      <div class="carousel-slide" role="img" aria-label="UberEats 雙週匯款">
         <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/3-2UberEats雙周匯款.png" alt="UberEats 雙週匯款，資金運用靈活" width="1600" height="500" loading="lazy">
       </div>
-      <div class="carousel-slide" aria-role="img" aria-label="強大的操作系統">
+      <div class="carousel-slide" role="img" aria-label="強大的操作系統">
         <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/4-2強大的操作系統.png" alt="UberEats 平台提供強大的操作系統與數據分析" width="1600" height="500" loading="lazy">
       </div>
-      <div class="carousel-slide" aria-role="img" aria-label="成本效益最大化">
+      <div class="carousel-slide" role="img" aria-label="成本效益最大化">
         <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/images/5-2成本效益最大化.png" alt="UberEats 協助您成本效益最大化" width="1600" height="500" loading="lazy">
       </div>
     </div>
