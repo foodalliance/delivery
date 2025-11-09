@@ -1,1 +1,476 @@
 
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="format-detection" content="telephone=no,address=no,email=no">
+  <meta name="theme-color" content="#115e59">
+
+  <!-- ✅ Google Search Console 驗證 -->
+  <meta name="google-site-verification" content="T8XKJX455Q1EdOc_ia34uDIp7BNKndcGzFHJloKZnTk" />
+
+  <!-- ⚡️ CWV: Preconnect / DNS Prefetch（外部資源主機） -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+  <!-- ✅ Google Tag Manager（HEAD） -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KLQ8TGVD');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- ====== 基本 SEO ====== -->
+  <title>UberEats 前台教學：商家平板登入、密碼重設與營業時間設定｜餐聯顧問</title>
+  <meta name="description" content="UberEats 商家接單前台（平板）完整教學：帳號密碼取得、登入、忘記密碼處理、以及如何設定商店營業時間。">
+  <meta name="keywords" content="UberEats 前台, UberEats 平板, 商家登入, 營業時間設定, UberEats 教程">
+
+  <!-- ====== Canonical & Hreflang（指向資料夾首頁） ====== -->
+  <link rel="canonical" href="https://foodalliance.github.io/delivery/frontdesk/">
+  <link rel="alternate" hreflang="zh-Hant-TW" href="https://foodalliance.github.io/delivery/frontdesk/">
+  <link rel="alternate" hreflang="x-default" href="https://foodalliance.github.io/delivery/frontdesk/">
+
+  <!-- ====== Open Graph (Facebook/LINE) ====== -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="餐聯顧問">
+  <meta property="og:locale" content="zh_TW">
+  <meta property="og:title" content="UberEats 前台教學：商家平板登入、密碼重設與營業時間設定">
+  <meta property="og:description" content="UberEats 商家接單前台（平板）完整教學：帳號密碼取得、登入、忘記密碼處理、以及如何設定商店營業時間。">
+  <meta property="og:image" content="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/前台封面.jpg">
+  <meta property="og:url" content="https://foodalliance.github.io/delivery/frontdesk/">
+
+  <!-- ====== Twitter Card ====== -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="UberEats 前台教學：商家平板登入、密碼重設與營業時間設定">
+  <meta name="twitter:description" content="UberEats 商家接單前台（平板）完整教學：帳號密碼取得、登入、忘記密碼處理、以及如何設定商店營業時間。">
+  <meta name="twitter:image" content="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/前台封面.jpg">
+
+  <!-- ====== Favicon（SVG 資料 URI） ====== -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect rx='20' width='100' height='100' fill='%23115e59'/%3E%3Ctext x='50' y='60' font-size='56' text-anchor='middle' fill='white' font-family='Arial'%3E%E8%81%AF%3C/text%3E%3C/svg%3E">
+
+  <!-- 結構化資料 HowTo（擴充版） -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    "name": "UberEats 商家前台登入與基本操作教學",
+    "description": "學習如何登入 UberEats 商家接單平板，並進行基礎的營業時間設定。",
+    "totalTime": "PT5M",
+    "image": "https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/前台封面.jpg",
+    "supply": [
+      {"@type":"HowToSupply","name":"接單平板或手機"},
+      {"@type":"HowToSupply","name":"商家帳號與密碼貼紙"}
+    ],
+    "tool": [
+      {"@type":"HowToTool","name":"Uber Eats 商家 App（前台）"},
+      {"@type":"HowToTool","name":"Uber Eats 商家後台（網頁版）"}
+    ],
+    "step": [
+      {"@type":"HowToStep","name":"取得帳號與密碼（紙本）","text":"查看隨平板寄送的紙本手冊貼紙取得帳號與密碼。"},
+      {"@type":"HowToStep","name":"登入接單平板","text":"開啟 App，輸入帳號密碼登入。"},
+      {"@type":"HowToStep","name":"忘記密碼","text":"以管理者身份登入商家後台的『使用者』重設密碼。"},
+      {"@type":"HowToStep","name":"設定營業時間","text":"於前台設定 → 商店營業時間，新增每日供應時段並儲存。"}
+    ]
+  }
+  </script>
+
+  <style>
+    :root{ --brand:#39843b; --brand-dark:#2f6e30; --text:#111827; --muted:#6b7280; --card:#ffffff; --bg:#ffffff; --radius:16px; --shadow:0 8px 28px rgba(0,0,0,.08); }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--text);background:var(--bg);line-height:1.65}
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+
+    header.header{background:linear-gradient(180deg,#fff 0%,#f3f5f7 100%);border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(6px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
+    .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#115e59;color:#fff;font-weight:900}
+    .menu{display:flex;gap:22px;align-items:center}
+    .menu > li{list-style:none;position:relative}
+    .menu > li > a{text-decoration:none;color:var(--text);font-weight:700;padding:8px 2px;display:inline-block}
+    .menu > li > a:hover{color:var(--brand)}
+    .menu > li > a:focus{outline:2px solid var(--brand);outline-offset:3px}
+    .submenu{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;min-width:180px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:6px 0;z-index:50}
+    .submenu a{display:block;padding:12px 16px;text-decoration:none;color:var(--text);font-weight:600}
+    .submenu a:hover,.submenu a:focus{background:var(--brand);color:#fff;outline:none}
+    .menu > li:hover .submenu{display:block}
+    .hamburger{display:none;background:#115e59;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:800}
+    @media (max-width:900px){
+      .menu{display:none;position:absolute;right:20px;top:64px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;flex-direction:column;gap:0;width:min(88vw,320px);box-shadow:0 10px 25px rgba(0,0,0,.12);padding:8px 0}
+      .menu > li > a{padding:12px 16px;display:block}
+      .hamburger{display:inline-block}
+      .menu.open{display:flex}
+    }
+
+    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid transparent;font-size:clamp(14px,1.8vw,18px); transition: all 0.2s ease-in-out;}
+    .btn-primary{background:var(--brand-dark);color:#fff}
+    .btn-ghost{background:transparent;border-color:var(--brand-dark);color:var(--brand-dark)}
+    .btn-ghost:hover{background:var(--brand-dark);color:#fff}
+    .btn-primary:hover{opacity:0.9; transform: translateY(-1px)}
+    .menu .menu-active { color: var(--brand); }
+    .submenu a[aria-current="page"] {
+      background: var(--brand);
+      color: #fff !important; 
+    }
+    .submenu a[aria-current="page"]:hover {
+      background: var(--brand-dark);
+    }
+
+
+    .hero-tutorial{padding:40px 0;text-align:center;background:linear-gradient(180deg, #f0fdf4 0%, #fff 100%)}
+    .hero-tutorial h1{font-weight:900;letter-spacing:.3px;font-size:clamp(30px,5vw,48px);line-height:1.12}
+    .hero-tutorial .subtitle{font-size:clamp(16px,2.2vw,22px);color:var(--muted);max-width:900px;margin:12px auto 0}
+
+    .section{padding:50px 0}
+    .section h2{font-size:clamp(24px,3.5vw,36px);font-weight:900;margin-bottom:16px;border-bottom:3px solid var(--brand);display:inline-block;padding-bottom:5px}
+
+    .media-grid{display:grid;grid-template-columns:1.2fr .8fr;align-items:center;gap:36px;margin-bottom:40px;padding:20px 0}
+    .media-grid:nth-child(odd){grid-template-areas: "content image"}
+    .media-grid:nth-child(even){grid-template-areas: "image content"; grid-template-columns: .8fr 1.2fr}
+    .media-content{grid-area:content}
+    .media-image{grid-area:image; display:flex; justify-content:center; align-items:center}
+    .media-image img{width:100%; height:auto; object-fit:contain; border-radius:var(--radius); box-shadow:var(--shadow); max-width:560px}
+    .media-content h3{font-size:24px; font-weight:800; margin-bottom:12px; color:var(--brand-dark)}
+    .media-content ol{margin-top:10px; padding-left:20px}
+    .media-content li{margin-bottom:10px; font-size:16px}
+    .media-content p strong{color:var(--brand-dark); font-weight:800}
+
+    @media (max-width:900px){
+      .media-grid{grid-template-columns:1fr; grid-template-areas: "image" "content" !important; gap:20px}
+      .media-grid:nth-child(even){grid-template-columns:1fr}
+      .media-image img{max-width:100%}
+    }
+
+    .callout{background:#fffbe7;border-left:5px solid #facc15;padding:16px;border-radius:var(--radius);margin-top:20px}
+    .callout strong{color:#ca8a04}
+    
+    /* === CTA 樣式 (針對新店家招募) - 已修改為磨砂玻璃風格 === */
+    .cta-join {
+      /* 加入深色漸變疊層，確保白色文字對比度 */
+      background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E7%94%B3%E8%AB%8B%E5%8A%A0%E5%85%A5%E8%83%8C%E6%99%AF%E5%9C%96.png');
+      background-size: cover;
+      background-position: center;
+      padding: 80px 0; 
+      color: white; 
+      text-align: center;
+      border-top: none !important; 
+    }
+    .cta-join h2 {
+      color: white;
+      border-bottom: none;
+      font-size: clamp(30px, 4.5vw, 42px);
+      margin-bottom: 8px;
+    }
+    .cta-join .lead {
+      font-size: clamp(18px, 2.5vw, 24px);
+      margin-bottom: 40px;
+      font-weight: 300;
+      color: white; 
+    }
+    .cta-join-grid {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      margin-top: 40px;
+    }
+    .cta-card {
+      /* 核心磨砂玻璃樣式 */
+      background: rgba(255, 255, 255, 0.2); 
+      backdrop-filter: blur(12px); 
+      color: var(--text);
+      padding: 30px;
+      border-radius: var(--radius);
+      max-width: 350px;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.3); /* 更深的陰影 */
+      transition: transform 0.3s ease-in-out;
+      border: 1px solid rgba(255, 255, 255, 0.5); /* 淺色邊框 */
+    }
+    .cta-card:hover {
+        transform: translateY(-5px);
+    }
+    .cta-card h3 {
+      font-size: 24px;
+      font-weight: 900;
+      color: #fff; /* 卡片標題使用白色 */
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5); /* 增加陰影以提高可讀性 */
+      margin-bottom: 15px;
+    }
+    .cta-card p {
+      min-height: 50px; 
+      color: #e5e5e5; /* 內文使用淺灰色 */
+    }
+    .cta-card .btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 14px;
+    }
+    /* 將 ghost 樣式調整為適用於深色背景卡片的白色輪廓按鈕 */
+    .cta-card .btn-ghost {
+      background: transparent;
+      border-color: #fff; /* 白色輪廓 */
+      color: #fff; /* 白色文字 */
+    }
+    .cta-card .btn-ghost:hover {
+      background: rgba(255, 255, 255, 0.15); /* Hover 效果：輕微白色填充 */
+      color: #fff;
+    }
+    /* === 結束 CTA 樣式 === */
+
+    .footer{border-top:1px solid #e5e7eb;background:#fcfcfd;padding:32px 0;color:#6b7280}
+    .smallprint p{margin:6px 0}
+  </style>
+
+  <script>
+    function go(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+    document.addEventListener('DOMContentLoaded', ()=>{
+      const ham=document.querySelector('.hamburger'); const menu=document.getElementById('mainmenu');
+      if(ham&&menu){
+        ham.addEventListener('click', ()=>{
+          const ex=ham.getAttribute('aria-expanded')==='true';
+          ham.setAttribute('aria-expanded', String(!ex));
+          menu.classList.toggle('open');
+        });
+        document.addEventListener('keydown', e=>{
+          if(e.key==='Escape'){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.focus(); }
+        });
+        document.addEventListener('click', e=>{
+          const el=e.target.closest('[data-cta]'); if(!el) return;
+          window.dataLayer=window.dataLayer||[];
+          window.dataLayer.push({event:'cta_click', cta:el.dataset.cta, href:el.getAttribute('href')||'', text:el.textContent.trim()});
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+  <!-- ✅ Google Tag Manager（noscript，緊跟在 <body> 後） -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLQ8TGVD"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <div class="container nav">
+      <a class="brand" href="../" aria-label="返回首頁">
+        <div class="logo" aria-hidden="true">聯</div>
+        <span>餐聯顧問 × UberEats 授權合作</span>
+      </a>
+      <button class="hamburger" aria-controls="mainmenu" aria-expanded="false" aria-label="主選單切換">☰</button>
+      <nav aria-label="主選單">
+        <ul class="menu" id="mainmenu">
+          <li><a href="../" data-cta="nav_home">首頁</a></li>
+          <li>
+            <a href="#" aria-haspopup="true" aria-expanded="false" class="menu-active">UberEats ▾</a>
+            <div class="submenu" role="menu" aria-label="UberEats 子選單">
+              <!-- 變更 1: 更新「快速加入」為絕對網址 -->
+              <a href="https://foodalliance.github.io/delivery/" data-cta="nav_quickjoin">快速加入</a>
+              <!-- 變更 2: 更新「前台教學」為絕對網址 -->
+              <a href="https://foodalliance.github.io/delivery/frontdesk/" data-cta="nav_front" aria-current="page">前台教學</a>
+              <a href="../backoffice/" data-cta="nav_back">後台教學</a>
+              <a href="../support/" data-cta="nav_support">各類客服</a>
+            </div>
+          </li>
+          <!-- 變更 3: 申請表單連結維持不變 (已在上次對話中更新) -->
+          <li><a href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="nav_form">申請表單</a></li>
+          <li><a href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="nav_line">加入 LINE</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero-tutorial" aria-labelledby="tutorial-title">
+      <div class="container">
+        <h1 id="tutorial-title">Uber Eats 商家接單前台（平板）完整教學 </h1>
+        <p class="subtitle">從登入、忘記密碼到營業時間設定，讓您快速上手接單流程。</p>
+        <img
+          src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/前台封面.jpg"
+          alt="Uber Eats 接單平板畫面示意圖"
+          width="1200" height="800"
+          style="width:100%; max-width:880px; height:auto; margin-top:30px; border-radius:var(--radius); box-shadow:var(--shadow);"
+          loading="eager" fetchpriority="high">
+      </div>
+    </section>
+
+    <!-- 步驟 1 -->
+    <section id="step1" class="section">
+      <div class="container">
+        <h2>步驟一：如何取得接單平板的帳號密碼</h2>
+
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>方法一：查看隨平板寄送的「紙本手冊/貼紙」【主要憑證】</h3>
+            <p>在您收到 Uber Eats 平板的包裹內，會有一本<strong>紙本手冊</strong>。請找到手冊上的 <strong>「重要登入資訊貼紙」</strong>，上面包含：</p>
+            <ol>
+              <li><strong>登入帳號：</strong>電子郵件格式（例：storename@example.com）。</li>
+              <li><strong>登入密碼：：</strong>英數混合，注意大小寫。</li>
+              <li><strong>客服專線：：</strong>帳密/軟體問題的官方服務專線。</li>
+            </ol>
+            <div class="callout">
+              <strong>重要提醒：：</strong>請將貼紙貼在店內<strong>安全但容易取用</strong>的位置，避免遺失影響接單。
+            </div>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/帳號密碼.jpg" alt="紙本手冊上貼有帳號密碼的貼紙">
+          </div>
+        </div>
+
+        <div class="media-grid" style="margin-top: 40px;">
+          <div class="media-content">
+            <h3>方法二：查閱您的「註冊電子郵件」【備份方式】</h3>
+            <p>若找不到貼紙，可在註冊信箱搜尋 Uber Eats 寄送的<strong>商家帳號資訊</strong>郵件，內容會列出與貼紙相同的帳密。</p>
+            <div class="callout">
+              <strong>別混淆：：</strong>這組帳密用於 <strong>「商家 App（前台）」</strong>，不能登入<strong>網頁版後台</strong>。
+            </div>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/登入資訊.jpg" alt="電子郵件中的登入資訊示意圖">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 2 -->
+    <section id="step2" class="section" style="background:#f9fafb;">
+      <div class="container">
+        <h2>步驟二：開始登入接單 App</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>找到 App、輸入帳號密碼，點擊登入！</h3>
+            <ol>
+              <li><strong>開啟 App：：</strong>在平板或手機找到 <strong>Uber Eats 商家 App</strong> 圖示。</li>
+              <li><strong>輸入帳號：</strong>輸入步驟一取得的電子郵件帳號。</li>
+              <li><strong>輸入密碼：：</strong>輸入密碼並確認大小寫無誤。</li>
+              <li><strong>登入：</strong>點選<strong>登入</strong>按鈕。</li>
+            </ol>
+            <p style="margin-top:15px;"><strong>若顯示「尚未完成設定」：：</strong>代表門市尚未開通，請確認上線資料已送出並聯繫顧問或官方客服協助開通。</p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/登入畫面.jpg" alt="商家 App 登入畫面截圖">
+          </div>
+        </div>
+
+        <!-- 補充示意：品牌與前台環境 -->
+        <div class="media-grid" style="margin-top:10px;">
+          <div class="media-content">
+            <h3>小提醒：尖峰前檢查與環境整備</h3>
+            <p>尖峰前 30 分鐘檢查 <strong>網路/電量/通知音量</strong>，並確認 <strong>餐袋與備品</strong> 是否到位，能有效降低延誤與取消率。</p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/嚴選餐廳.jpg" alt="前台環境示意圖">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 3 -->
+    <section id="step3" class="section">
+      <div class="container">
+        <h2>忘記密碼怎麼辦？</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>透過「Uber Eats 商家後台（網頁版）」重設前台 App 密碼</h3>
+            <p>若無法登入前台 App，請用<strong>管理者帳號</strong>登入網頁版商家後台進行重設：</p>
+            <ol>
+              <li><strong>登入後台：</strong>以管理者帳號登入 <a href="https://restaurant-dashboard.ubereats.com" target="_blank" rel="noopener" data-cta="step3_backend_link" style="color:var(--brand-dark); text-decoration:underline; font-weight:800;">Uber Eats 商家後台</a>。</li>
+              <li><strong>進入使用者管理：：</strong>在選單找到<strong>「使用者」</strong>頁面。</li>
+              <li><strong>查找前台帳號：：</strong>於清單中找到前台（平板）專用帳號。</li>
+              <li><strong>重設密碼：：</strong>點選該帳號旁的<strong>重設密碼</strong>，設定新密碼。</li>
+            </ol>
+            <div class="callout">
+              <strong>密碼規定：：</strong>
+              <ul>
+                <li>至少 8 碼。</li>
+                <li>需含英文與數字（例：tweats2025）。</li>
+                <li>使用者名稱（帳號）不可修改。</li>
+              </ul>
+            </div>
+            <p style="margin-top:15px;">緊急支援：<a href="tel:00801857210" data-cta="frontdesk_support_tel" aria-label="官方軟體客服電話：0080-185-7210">0080-185-7210</a></p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/重設密碼.jpg" alt="商家後台重設密碼位置截圖">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 步驟 4 -->
+    <section id="step4" class="section" style="background:#f9fafb;">
+      <div class="container">
+        <h2>商店營業時間設定提醒</h2>
+        <div class="media-grid">
+          <div class="media-content">
+            <h3>準確的營業時間＝更穩定的曝光</h3>
+            <ol>
+              <li><strong>進入設定：</strong>登入前台，點左側<strong>齒輪</strong>圖示。</li>
+              <li><strong>點選營業時間：：</strong>選擇<strong>「商店營業時間」</strong>。</li>
+              <li><strong>設定時段：：：</strong>可為每天設定一或多個時段（可跨午休）。</li>
+              <li><strong>儲存：：：</strong>按下頁面底部<strong>更新菜單供應時段</strong>完成設定。</li>
+            </ol>
+            <p class="callout"><strong>小知識：：</strong>營業時段內請保持平板上線，離線會被視為未接單，影響曝光與排序。</p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/營業時間-1.png" alt="設定 → 商店營業時間截圖">
+          </div>
+        </div>
+
+        <div class="media-grid" style="margin-top:20px;">
+          <div class="media-content">
+            <h3>範例：午休雙時段設定</h3>
+            <ul>
+              <li><strong>週一：：</strong>11:00–14:00；17:00–20:30</li>
+              <li><strong>週二：：</strong>10:30–21:00（全日）</li>
+            </ul>
+            <p class="callout"><strong>注意：：</strong>若仍在審核期，時段可能尚未生效；請與顧問確認。</p>
+          </div>
+          <div class="media-image">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/營業時間-2.png" alt="多時段設定介面截圖">
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 聯繫我們 / 招募新店 (已修改為申請加入 CTA) -->
+    <section id="contact" class="section cta-join" role="complementary" aria-labelledby="join-title">
+      <div class="container">
+        <h2 id="join-title">尚未申請加入 Uber Eats 嗎？</h2>
+        <p class="lead">立即填寫申請表單，由專人為您服務！</p>
+
+        <div class="cta-join-grid">
+          <!-- Option 1: Online Form -->
+          <div class="cta-card">
+            <h3>填寫申請表單</h3>
+            <p>請點擊下方按鈕填寫申請資料。</p>
+            <!-- CTA 區塊中的「前往申請表單」連結維持不變 -->
+            <a class="btn btn-primary" href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="tutorial_apply_form">前往申請表單</a>
+          </div>
+
+          <!-- Option 2: LINE Consultation -->
+          <div class="cta-card">
+            <h3>LINE 諮詢申辦</h3>
+            <p>一鍵加入官方 LINE，留下「店名」與專人即時諮詢。</p>
+            <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="tutorial_line_new">加入 LINE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" role="contentinfo">
+    <div class="container smallprint">
+      <p><b>本服務協助店家上線 Uber Eats 平台</b>，流程透明；<b>個人資料僅用於申請與服務聯繫</b>。</p>
+      <p><b>免上架費</b>；商家費用與合約條款由 Uber Eats 依平台規定辦理，並依不同季度及行政區差異為您擇優。</p>
+      <p style="font-size:14px">服務範圍：台灣餐廳招募與上線輔導。</p>
+      <p style="font-size:14px">個資用途：僅用於 Uber Eats 申請與服務聯繫，不另作他用。</p>
+    </div>
+  </footer>
+</body>
+</html>
