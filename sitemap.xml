@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <!-- 首頁（canonical） -->
+
   <url>
     <loc>https://foodalliance.github.io/delivery/</loc>
-    <lastmod>2025-11-08</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- 主要段落對應的獨立錨點雖不列入 sitemap（#anchor 不被索引成獨立 URL），
-       但你若未來拆成獨立頁面，記得各自加進 sitemap。以下示範幾個可能的子頁路徑（若未來有建立再保留/加上）。 -->
-
-  <!-- 例如未來有 /delivery/faq/ 可加： 
   <url>
-    <loc>https://foodalliance.github.io/delivery/faq/</loc>
-    <lastmod>2025-11-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <loc>https://foodalliance.github.io/delivery/frontdesk/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 未來如果你有 backoffice 也可以加 -->
+  <!--
+  <url>
+    <loc>https://foodalliance.github.io/delivery/backoffice/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   -->
 
