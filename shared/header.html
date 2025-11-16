@@ -1,29 +1,33 @@
-<!-- ====== HEADER (one-paste) 開始 ====== -->
-<!-- 建議放在 <body> 最前方適當位置 -->
-<div id="site-header" role="navigation" aria-label="主選單"></div>
+<!-- /delivery/shared/header.html -->
+<header class="header" role="banner">
+  <div class="container nav">
+    <a class="brand" href="/" aria-label="返回首頁">
+      <div class="logo" aria-hidden="true" style="width:34px;height:34px;border-radius:9px;overflow:hidden;background:transparent;color:transparent;display:grid;place-items:center">
+        <img src="https://raw.githubusercontent.com/foodalliance/Home/main/image/LOGO/%E9%A4%90%E8%81%AFLOGO.png"
+             alt="餐聯顧問 Logo" width="34" height="34"
+             style="display:block;width:34px;height:34px;object-fit:cover">
+      </div>
+      <span>餐聯顧問 × UberEats 授權合作</span>
+    </a>
 
-<!-- 讓下拉選單在 hover/focus/手機 點擊 時都可開關 -->
-<style>
-  /* 若站內已經有同名樣式，可保留較精緻的版本，這段是保底用 */
-  .menu > li { position: relative; }
-  .submenu{
-    display:none; position:absolute; top:100%; left:0; z-index:1000;
-    background:#fff; border:1px solid #e5e7eb; border-radius:12px;
-    min-width:180px; box-shadow:0 10px 25px rgba(0,0,0,.12); padding:6px 0;
-  }
-  .submenu a{ display:block; padding:12px 16px; text-decoration:none; color:#111827; font-weight:600; }
-  .submenu a:hover{ background:#115e59; color:#fff; }
+    <button class="hamburger" aria-controls="mainmenu" aria-expanded="false" aria-label="主選單切換">☰</button>
 
-  /* 桌機 hover / 鍵盤 focus 顯示子選單 */
-  .menu > li:hover .submenu,
-  .menu > li:focus-within .submenu { display:block; }
-
-  /* 手機選單展開（若你已有 .menu.open 樣式可刪除此段） */
-  @media (max-width:900px){
-    .menu { display:none; position:absolute; right:20px; top:64px; background:#fff;
-            border:1px solid #e5e7eb; border-radius:12px; flex-direction:column; gap:0;
-            width:min(88vw,320px); box-shadow:0 10px 25px rgba(0,0,0,.12); padding:8px 0; }
-    .menu.open { display:flex; }
-  }
-</style>
-
+    <nav aria-label="主選單">
+      <ul class="menu" id="mainmenu">
+        <li><a href="/delivery/#" data-cta="nav_home">首頁</a></li>
+        <li>
+          <a href="#" aria-haspopup="true" aria-expanded="false">UberEats ▾</a>
+          <div class="submenu" role="menu" aria-label="UberEats 子選單">
+            <a href="/delivery/" data-cta="nav_quickjoin">快速加入</a>
+            <a href="/delivery/frontdesk/" data-cta="nav_front">前台教學</a>
+            <a href="/delivery/backend/" data-cta="nav_back">後台教學</a>
+            <a href="javascript:void(0)" data-cta="nav_support">各類客服</a>
+          </div>
+        </li>
+        <li><a href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="nav_form">申請表單</a></li>
+        <li><a href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="nav_line">加入 LINE</a></li>
+        <li><a href="/delivery/#partners" data-cta="nav_partners">異業結盟</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
