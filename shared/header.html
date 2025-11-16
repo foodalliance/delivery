@@ -1,37 +1,106 @@
-<!-- /delivery/shared/header.html -->
-<header class="header" role="banner" style="background:linear-gradient(180deg,#fff 0%,#f3f5f7 100%);border-bottom:1px solid #e5e7eb;position:sticky;top:0;z-index:100;backdrop-filter:saturate(180%) blur(6px)">
-  <div class="container nav" style="max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;justify-content:space-between;height:64px;position:relative">
-    <a class="brand" href="#" aria-label="返回首頁" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#111827;font-weight:800">
-      <div class="logo" aria-hidden="true" style="width:34px;height:34px;border-radius:9px;overflow:hidden;background:transparent;color:transparent;display:grid;place-items:center">
-        <img
-          src="https://raw.githubusercontent.com/foodalliance/Home/main/images/LOGO/%E9%A4%90%E8%81%AFLOGO.png"
-          alt="餐聯顧問 Logo" width="34" height="34"
-          style="display:block;width:34px;height:34px;object-fit:cover">
-      </div>
-      <span>餐聯顧問 × UberEats 授權合作</span>
-    </a>
+<!-- ====== HEADER (one-paste) 開始 ====== -->
+<!-- 建議放在 <body> 最前方適當位置 -->
+<div id="site-header" role="navigation" aria-label="主選單"></div>
 
-    <button class="hamburger" aria-controls="mainmenu" aria-expanded="false" aria-label="主選單切換">☰</button>
-    <nav aria-label="主選單">
-      <ul class="menu" id="mainmenu">
-        <li><a href="#" onclick="go('top')" data-cta="nav_home">首頁</a></li>
-        <li>
-          <a href="#" aria-haspopup="true" aria-expanded="false">UberEats ▾</a>
-          <div class="submenu" role="menu" aria-label="UberEats 子選單">
-            <!-- ✅ 快速加入：導向首頁 -->
-            <a href="https://foodalliance.github.io/delivery/" data-cta="nav_quickjoin">快速加入</a>
-            <!-- 前台教學 -->
-            <a href="https://foodalliance.github.io/delivery/frontdesk/" data-cta="nav_front">前台教學</a>
-            <!-- ✅ 後台教學：改為你指定的網址 -->
-            <a href="https://foodalliance.github.io/delivery/backend/" data-cta="nav_back">後台教學</a>
-            <a href="javascript:void(0)" data-cta="nav_support">各類客服</a>
-          </div>
-        </li>
-        <!-- ✅ 申請表單：導向 Google 表單 -->
-        <li><a href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="nav_form">申請表單</a></li>
-        <li><a href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="nav_line">加入 LINE</a></li>
-        <li><a href="#partners" onclick="go('partners')" data-cta="nav_partners">異業結盟</a></li>
-      </ul>
-    </nav>
-  </div>
-</header>
+<!-- 讓下拉選單在 hover/focus/手機 點擊 時都可開關 -->
+<style>
+  /* 若站內已經有同名樣式，可保留較精緻的版本，這段是保底用 */
+  .menu > li { position: relative; }
+  .submenu{
+    display:none; position:absolute; top:100%; left:0; z-index:1000;
+    background:#fff; border:1px solid #e5e7eb; border-radius:12px;
+    min-width:180px; box-shadow:0 10px 25px rgba(0,0,0,.12); padding:6px 0;
+  }
+  .submenu a{ display:block; padding:12px 16px; text-decoration:none; color:#111827; font-weight:600; }
+  .submenu a:hover{ background:#115e59; color:#fff; }
+
+  /* 桌機 hover / 鍵盤 focus 顯示子選單 */
+  .menu > li:hover .submenu,
+  .menu > li:focus-within .submenu { display:block; }
+
+  /* 手機選單展開（若你已有 .menu.open 樣式可刪除此段） */
+  @media (max-width:900px){
+    .menu { display:none; position:absolute; right:20px; top:64px; background:#fff;
+            border:1px solid #e5e7eb; border-radius:12px; flex-direction:column; gap:0;
+            width:min(88vw,320px); box-shadow:0 10px 25px rgba(0,0,0,.12); padding:8px 0; }
+    .menu.open { display:flex; }
+  }
+</style>
+
+<script>
+  // 平滑捲動（沿用你原本的 go()）
+  function go(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+
+  document.addEventListener('DOMContentLoaded', ()=>{
+    const mount = document.getElementById('site-header');
+    if (!mount) return;
+
+    // ⬇️ 載入共用 Header（/delivery/shared/header.html）
+    fetch('/delivery/shared/header.html')
+      .then(res => res.text())
+      .then(html => {
+        mount.innerHTML = html;
+
+        // ✅ 依頁面需要高亮當前選單（下面以「前台教學」為例，可改成你當前頁）
+        const current = mount.querySelector('[data-cta="nav_front"], a[href="/delivery/frontdesk/"]');
+        if (current) { current.setAttribute('aria-current','page'); current.classList.add('menu-active'); }
+
+        // ✅ 手機點擊「UberEats ▾」切換子選單（桌機靠 CSS hover/focus）
+        const trigger = mount.querySelector('a[aria-haspopup="true"]');
+        const submenu = mount.querySelector('.submenu');
+        if (trigger && submenu) {
+          trigger.addEventListener('click', (e)=>{
+            if (window.matchMedia('(max-width: 900px)').matches) {
+              e.preventDefault();
+              const expanded = trigger.getAttribute('aria-expanded') === 'true';
+              trigger.setAttribute('aria-expanded', String(!expanded));
+              submenu.style.display = expanded ? 'none' : 'block';
+            }
+          });
+          // 點外面收起
+          document.addEventListener('click', (e)=>{
+            if (!mount.contains(e.target) && submenu.style.display === 'block') {
+              trigger.setAttribute('aria-expanded','false'); submenu.style.display='none';
+            }
+          });
+        }
+
+        // ✅ LOGO 已於 shared/header.html 改成圖片版
+        // 若該頁沒用 shared header、而是寫死在頁內，請把 <div class="logo">聯</div> 換成：
+        // <div class="logo" aria-hidden="true" style="background:transparent;color:transparent;padding:0">
+        //   <img src="https://raw.githubusercontent.com/foodalliance/Home/main/image/LOGO/%E9%A4%90%E8%81%AFLOGO.png" alt="餐聯顧問 Logo"
+        //        width="34" height="34" style="display:block;width:34px;height:34px;border-radius:9px;object-fit:cover">
+        // </div>
+      })
+      .catch(() => {
+        mount.innerHTML =
+          '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>';
+      });
+
+    // ✅ 事件代理：手機漢堡選單 + CTA 打點（沿用你的寫法）
+    document.addEventListener('click', e=>{
+      const ham = e.target.closest('.hamburger');
+      const menu = document.getElementById('mainmenu');
+      if(ham && menu){
+        const ex = ham.getAttribute('aria-expanded')==='true';
+        ham.setAttribute('aria-expanded', String(!ex));
+        menu.classList.toggle('open');
+      }
+      const el=e.target.closest('[data-cta]');
+      if(el){
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'cta_click', cta:el.dataset.cta, href:el.getAttribute('href')||'', text:el.textContent.trim()});
+      }
+    });
+
+    // Esc 關閉手機選單
+    document.addEventListener('keydown', e=>{
+      if(e.key==='Escape'){
+        const menu=document.getElementById('mainmenu');
+        const ham=document.querySelector('.hamburger');
+        if(menu&&ham){ menu.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.focus(); }
+      }
+    });
+  });
+</script>
+<!-- ====== HEADER (one-paste) 結束 ====== -->
