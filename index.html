@@ -191,7 +191,7 @@
     .hero .kpi{font-size:clamp(18px,2.6vw,28px);font-weight:900;color:var(--brand-dark);margin-top:16px}
     .hero .assure{font-size:clamp(16px,2vw,20px);color:var(--muted);margin-top:10px}
     .cta{display:flex;gap:14px;justify-content:center;margin-top:22px}
-    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid transparent;font-size:clamp(14px,1.8vw,18px)}
+    .btn{display:inline-block;text-decoration:none;padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);border-radius:10px;font-weight:800;border:2px solid透明;font-size:clamp(14px,1.8vw,18px)}
     .btn-primary{background:var(--brand-dark);color:#fff}
     .btn-ghost{background:transparent;border-color:var(--brand-dark);color:var(--brand-dark)}
     .btn-ghost:hover{background:var(--brand-dark);color:#fff}
@@ -316,13 +316,26 @@
     }
 
     document.addEventListener('DOMContentLoaded', ()=>{
-      // 動態載入共用 Header（確保用「絕對路徑」指到 /delivery/shared/header.html）
-      const mount = document.getElementById('site-header');
-      if (mount) {
+      // ✅ 共用 Header 掛載
+      const headerMount = document.getElementById('site-header');
+      if (headerMount) {
         fetch('/delivery/shared/header.html')
           .then(res => res.text())
-          .then(html => { mount.innerHTML = html; })
-          .catch(() => { mount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>'; });
+          .then(html => { headerMount.innerHTML = html; })
+          .catch(() => {
+            headerMount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>';
+          });
+      }
+
+      // ✅ 共用 Footer 掛載
+      const footerMount = document.getElementById('site-footer');
+      if (footerMount) {
+        fetch('/delivery/shared/footer.html')
+          .then(res => res.text())
+          .then(html => { footerMount.innerHTML = html; })
+          .catch(() => {
+            footerMount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Footer 載入失敗，請檢查 /delivery/shared/footer.html</div>';
+          });
       }
 
       // hamburger 事件代理（header 載入後依然有效）
@@ -433,9 +446,9 @@
           <h2 id="process-title" style="font-size:28px;font-weight:900;">完整上線協作｜交給我們，你專心顧店</h2>
           <ul class="bullets" style="margin:8px 0 0 0; padding-left:18px;">
             <li><b>文件與合約：</b>線上簽署、重點文件檢核，減少重工</li>
-            <li><b>餐點素材：：</b>至少五張<strong>餐點照片</strong>與菜單建置指引</li>
+            <li><b>餐點素材：</b>至少五張<strong>餐點照片</strong>與菜單建置指引</li>
             <li><b>設定教學：</b>門市資訊、接單設定、平板寄送與啟用</li>
-            <li><b>專人說明：：</b>全程解答問題，<u>流程清楚透明</u>，再送件</li>
+            <li><b>專人說明：</b>全程解答問題，<u>流程清楚透明</u>，再送件</li>
           </ul>
           <p class="fineprint" style="font-size:13px;color:#6b7280;margin-top:8px;">* 常見時程約七個工作天（供參考，實際依資料完整度與拍攝/審核檔期而定）。審核與合約由 Uber Eats 官方負責。</p>
           <div class="cta" style="justify-content:flex-start; gap:12px; margin-top:10px;">
@@ -520,15 +533,8 @@
     </section>
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container smallprint">
-      <p><b>本服務協助店家上線 Uber Eats 平台</b>，流程透明；<b>個人資料僅用於申請與服務聯繫</b>。</p>
-      <p><b>免上架費</b>；商家費用與合約條款由 Uber Eats 依平台規定辦理，並依不同季度及行政區差異為您擇優。</p>
-      <p style="font-size:14px">服務範圍：台灣餐廳招募與上線輔導。</p>
-      <p style="font-size:14px">個資用途：僅用於 Uber Eats 申請與服務聯繫，不另作他用。</p>
-    </div>
-  </footer>
+  <!-- ✅ 共用 Footer 掛載點：會自動把 /delivery/shared/footer.html 插進來 -->
+  <div id="site-footer"></div>
 
 </body>
 </html>
-
