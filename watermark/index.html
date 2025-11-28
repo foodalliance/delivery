@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>浮水印生成器｜Uber Eats 申請專用圖片工具</title>
+
+  <!-- 基本設定 -->
+  <meta name="robots" content="index,follow,max-image-preview:large">
+  <meta name="format-detection" content="telephone=no,address=no,email=no">
+  <meta name="theme-color" content="#115e59">
+
+  <!-- ✅ Google Search Console 驗證（如不需要可移除） -->
+  <meta name="google-site-verification" content="T8XKJX455Q1EdOc_ia34uDIp7BNKndcGzFHJloKZnTk" />
+
+  <!-- ⚡️ CWV: Preconnect / DNS Prefetch -->
+  <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
+  <link rel="dns-prefetch" href="https://www.googletagmanager.com">
+
+  <!-- ✅ Google Tag Manager（HEAD） -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-KLQ8TGVD');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      --brand:#39843b;
+      --brand-dark:#2f6e30;
+      --text:#111827;
+      --muted:#6b7280;
+      --card:#ffffff;
+      --bg:#eef2ff;
+      --radius:16px;
+      --shadow:0 8px 28px rgba(0,0,0,.08);
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,
+        "Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.65;
+    }
+    .container{max-width:1200px;margin:0 auto;padding:0 20px}
+    .section{padding:50px 0}
+
+    /* Header 共用樣式（shared/header.html 用） */
+    header.header{
+      background:linear-gradient(180deg,#fff 0%,#f3f5f7 100%);
+      border-bottom:1px solid #e5e7eb;
+      position:sticky;top:0;z-index:100;
+      backdrop-filter:saturate(180%) blur(6px);
+    }
+    .nav{display:flex;align-items:center;justify-content:space-between;height:64px;position:relative}
+    .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:800}
+    .logo{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;background:#115e59;color:#fff;font-weight:900}
+    .menu{display:flex;gap:22px;align-items:center}
+    .menu > li{list-style:none;position:relative}
+    .menu > li > a{text-decoration:none;color:var(--text);font-weight:700;padding:8px 2px;display:inline-block}
+    .menu > li > a:hover{color:var(--brand)}
+    .menu > li > a:focus{outline:2px solid var(--brand);outline-offset:3px}
+    .submenu{display:none;position:absolute;top:100%;left:0;background:#fff;border:1px solid #e5e7eb;border-radius:12px;min-width:180px;box-shadow:0 10px 25px rgba(0,0,0,.12);padding:6px 0;z-index:50}
+    .submenu a{display:block;padding:12px 16px;text-decoration:none;color:var(--text);font-weight:600}
+    .submenu a:hover,.submenu a:focus{background:var(--brand);color:#fff;outline:none}
+    .menu > li:hover .submenu{display:block}
+    .hamburger{display:none;background:#115e59;color:#fff;border:0;border-radius:10px;padding:8px 12px;font-weight:800}
+    @media (max-width:900px){
+      .menu{display:none;position:absolute;right:20px;top:64px;background:#fff;border:1px solid #e5e7eb;border-radius:12px;flex-direction:column;gap:0;width:min(88vw,320px);box-shadow:0 10px 25px rgba(0,0,0,.12);padding:8px 0}
+      .menu > li > a{padding:12px 16px;display:block}
+      .hamburger{display:inline-block}
+      .menu.open{display:flex}
+    }
+
+    .btn{
+      display:inline-block;
+      text-decoration:none;
+      padding:clamp(10px,1.3vw,14px) clamp(18px,2.2vw,24px);
+      border-radius:10px;
+      font-weight:800;
+      border:2px solid transparent;
+      font-size:clamp(14px,1.8vw,18px);
+      transition:all .2s ease-in-out;
+    }
+    .btn-primary{background:var(--brand-dark);color:#fff}
+    .btn-ghost{background:transparent;border-color:var(--brand-dark);color:var(--brand-dark)}
+    .btn-ghost:hover{background:var(--brand-dark);color:#fff}
+    .btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+    .menu .menu-active{color:var(--brand)}
+    .submenu a[aria-current="page"]{background:var(--brand);color:#fff!important}
+    .submenu a[aria-current="page"]:hover{background:var(--brand-dark)}
+
+    .footer{border-top:1px solid #e5e7eb;background:#fcfcfd;padding:32px 0;color:#6b7280}
+    .smallprint p{margin:6px 0}
+
+    /* === CTA（招募新店家）磨砂玻璃風格 === */
+    .cta-join{
+      background-image:linear-gradient(rgba(0,0,0,.5),rgba(0,0,0,.7)),
+        url('https://raw.githubusercontent.com/foodalliance/delivery/main/images/%E7%94%B3%E8%AB%8B%E5%8A%A0%E5%85%A5%E8%83%8C%E6%99%AF%E5%9C%96.png');
+      background-size:cover;background-position:center;
+      padding:80px 0;color:#fff;text-align:center;border-top:none!important;
+    }
+    .cta-join h2{color:#fff;border-bottom:none;font-size:clamp(30px,4.5vw,42px);margin-bottom:8px}
+    .cta-join .lead{font-size:clamp(18px,2.5vw,24px);margin-bottom:40px;font-weight:300;color:#fff}
+    .cta-join-grid{display:flex;justify-content:center;gap:30px;flex-wrap:wrap;margin-top:40px}
+    .cta-card{
+      background:rgba(255,255,255,.2);backdrop-filter:blur(12px);
+      color:var(--text);padding:30px;border-radius:var(--radius);
+      max-width:350px;width:100%;box-shadow:0 4px 16px rgba(0,0,0,.3);
+      transition:transform .3s;border:1px solid rgba(255,255,255,.5);
+    }
+    .cta-card:hover{transform:translateY(-5px)}
+    .cta-card h3{font-size:24px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.5);margin-bottom:15px}
+    .cta-card p{min-height:50px;color:#e5e5e5}
+    .cta-card .btn{margin-top:20px;width:100%;padding:14px}
+    .cta-card .btn-ghost{background:transparent;border-color:#fff;color:#fff}
+    .cta-card .btn-ghost:hover{background:rgba(255,255,255,.15);color:#fff}
+
+    /* ===== 浮水印工具本身的樣式 ===== */
+    /* 隱藏原生檔案輸入框，使用自定義按鈕 */
+    .custom-file-upload{
+      border:2px dashed #a5b4fc;
+      cursor:pointer;
+      transition:all 0.2s;
+    }
+    .custom-file-upload:hover{
+      border-color:#4f46e5;
+      background-color:#eef2ff;
+    }
+    /* 調整 canvas 的顯示樣式 */
+    #outputCanvas{
+      max-width:100%;
+      height:auto;
+      border-radius:0.75rem;
+      box-shadow:0 20px 25px -5px rgba(0,0,0,0.1),
+                  0 8px 10px -6px rgba(0,0,0,0.05);
+      background-color:#fff;
+    }
+    .position-grid{display:grid;gap:4px}
+    .position-grid-3x3{grid-template-columns:repeat(3,1fr)}
+    .position-grid-5x5{grid-template-columns:repeat(5,1fr)}
+    .position-radio-label{
+      width:100%;height:30px;
+      display:flex;align-items:center;justify-content:center;
+      border:1px solid #d1d5db;border-radius:4px;
+      cursor:pointer;
+      transition:background-color 0.1s,border-color 0.1s;
+    }
+    .position-radio-label:has(input:checked){
+      background-color:#3b82f6;border-color:#3b82f6;
+    }
+    .position-radio-label:has(input:checked) span{background-color:white}
+    .position-radio-label:hover{background-color:#eff6ff}
+  </style>
+
+  <!-- Header / Footer 載入 & CTA 打點 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 載入共用 Header
+      const mount = document.getElementById('site-header');
+      if (mount) {
+        fetch('/delivery/shared/header.html')
+          .then(res => res.text())
+          .then(html => {
+            mount.innerHTML = html;
+
+            // 如果未來在 header.html 加上此分頁的導航，可在此高亮
+            const toolLink = mount.querySelector('[data-cta="nav_tool"], a[href="/delivery/watermark/"]');
+            if (toolLink) {
+              toolLink.setAttribute('aria-current','page');
+              toolLink.classList.add('menu-active');
+            }
+          })
+          .catch(() => {
+            mount.innerHTML =
+              '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Header 載入失敗，請檢查 /delivery/shared/header.html</div>';
+          });
+      }
+
+      // 載入共用 Footer
+      const footerMount = document.getElementById('site-footer');
+      if (footerMount) {
+        fetch('/delivery/shared/footer.html')
+          .then(res => res.text())
+          .then(html => { footerMount.innerHTML = html; })
+          .catch(() => {
+            footerMount.innerHTML =
+              '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Footer 載入失敗，請檢查 /delivery/shared/footer.html</div>';
+          });
+      }
+
+      // 事件代理：手機漢堡選單 + CTA 打點
+      document.addEventListener('click', e => {
+        const ham = e.target.closest('.hamburger');
+        const menu = document.getElementById('mainmenu');
+        if (ham && menu) {
+          const ex = ham.getAttribute('aria-expanded') === 'true';
+          ham.setAttribute('aria-expanded', String(!ex));
+          menu.classList.toggle('open');
+        }
+        const el = e.target.closest('[data-cta]');
+        if (el) {
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push({
+            event:'cta_click',
+            cta:el.dataset.cta,
+            href:el.getAttribute('href') || '',
+            text:el.textContent.trim()
+          });
+        }
+      });
+
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+          const menu = document.getElementById('mainmenu');
+          const ham = document.querySelector('.hamburger');
+          if (menu && ham) {
+            menu.classList.remove('open');
+            ham.setAttribute('aria-expanded','false');
+            ham.focus();
+          }
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+  <!-- ✅ Google Tag Manager（noscript，緊跟在 <body> 後） -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KLQ8TGVD"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+  <!-- 共用 Header 掛載點 -->
+  <div id="site-header" role="navigation" aria-label="主選單"></div>
+
+  <main id="top">
+    <!-- 浮水印工具區塊 -->
+    <section class="section">
+      <div class="container">
+        <div class="w-full max-w-6xl mx-auto bg-white rounded-2xl shadow-3xl p-6 md:p-10">
+          <h1 class="text-3xl font-extrabold text-gray-900 mb-8 border-b pb-3 flex items-center">
+            <svg class="w-8 h-8 mr-3 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            浮水印生成器
+          </h1>
+
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 左側設定區 -->
+            <div class="lg:col-span-1 space-y-6">
+
+              <!-- 步驟 1: 檔案上傳 -->
+              <div class="p-6 border border-gray-200 rounded-xl bg-gray-50 shadow-sm">
+                <label for="imageUpload" class="block text-lg font-bold text-gray-800 mb-4">1. 上傳圖片</label>
+                <div class="custom-file-upload p-6 text-center rounded-lg">
+                  <input type="file" id="imageUpload" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                  <label for="imageUpload" class="text-indigo-600 hover:text-indigo-800 font-semibold block">
+                    點擊上傳 (PNG, JPG, WebP)
+                  </label>
+                  <p class="text-xs text-gray-500 mt-1">
+                    圖片在瀏覽器本地處理。
+                  </p>
+                </div>
+                <p id="fileNameDisplay" class="text-sm text-gray-600 mt-3 truncate"></p>
+              </div>
+
+              <!-- 步驟 2: 浮水印配置 -->
+              <div class="p-6 border border-gray-200 rounded-xl bg-white shadow-lg">
+                <h2 class="text-lg font-bold text-gray-800 mb-4">2. 浮水印配置</h2>
+
+                <!-- 水印模式 -->
+                <div class="mb-6 border-b pb-4">
+                  <label class="block text-sm font-bold text-gray-700 mb-2">浮水印類型</label>
+                  <div class="flex flex-col md:flex-row md:space-x-4 space-y-2 md:space-y-0">
+                    <label class="inline-flex items-center">
+                      <input type="radio" name="watermarkMode" value="text" class="form-radio text-indigo-600" checked onchange="switchWatermarkMode('text')">
+                      <span class="ml-2 text-gray-700">文字浮水印</span>
+                    </label>
+                    <label class="inline-flex items-center">
+                      <input type="radio" name="watermarkMode" value="image" class="form-radio text-indigo-600" onchange="switchWatermarkMode('image')">
+                      <span class="ml-2 text-gray-700">圖片/LOGO浮水印 (進階)</span>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- 文字浮水印設定 -->
+                <div id="textWatermarkSettings" class="space-y-4">
+                  <div class="mb-4">
+                    <label for="watermarkText" class="block text-sm font-medium text-gray-700 mb-1">浮水印文字</label>
+                    <input type="text" id="watermarkText" value="僅供申請UberEats商家專用" class="w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" placeholder="輸入浮水印內容">
+                  </div>
+                  <div class="mb-4 flex items-center justify-between">
+                    <label for="watermarkColor" class="text-sm font-medium text-gray-700">顏色</label>
+                    <input type="color" id="watermarkColor" value="#ff0000" oninput="applyWatermark()">
+                  </div>
+                </div>
+
+                <!-- 圖片浮水印設定 -->
+                <div id="imageWatermarkSettings" class="space-y-4 hidden">
+                  <div class="mb-4">
+                    <label for="logoUpload" class="block text-sm font-medium text-gray-700 mb-1">上傳 LOGO / 圖片</label>
+                    <input type="file" id="logoUpload" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" onchange="handleLogoUpload(event)">
+                    <p id="logoFileNameDisplay" class="text-xs text-gray-500 mt-1"></p>
+                  </div>
+                </div>
+
+                <!-- 共通設定 -->
+                <div class="border-t pt-4 mt-4 space-y-4">
+                  <!-- 不透明度 -->
+                  <div class="mb-4">
+                    <label for="watermarkOpacity" class="block text-sm font-medium text-gray-700 mb-1">
+                      不透明度: <span id="opacityValue">30%</span>
+                    </label>
+                    <input type="range" id="watermarkOpacity" min="0.1" max="1.0" step="0.05" value="0.3" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="updateOpacityValue()">
+                  </div>
+
+                  <!-- 尺寸 -->
+                  <div class="mb-4">
+                    <label for="watermarkSize" class="block text-sm font-medium text-gray-700 mb-1">
+                      尺寸 (佔圖片比例): <span id="sizeValue">6%</span>
+                    </label>
+                    <input type="range" id="watermarkSize" min="1" max="200" step="1" value="6" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="updateSizeValue()">
+                  </div>
+
+                  <!-- 旋轉 -->
+                  <div class="mb-4">
+                    <label for="watermarkRotation" class="block text-sm font-medium text-gray-700 mb-1">
+                      旋轉角度: <span id="rotationValue">0°</span>
+                    </label>
+                    <input type="range" id="watermarkRotation" min="-180" max="180" step="1" value="0" class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer" oninput="updateRotationValue()">
+                  </div>
+
+                  <!-- 位置 3x3 / 5x5 -->
+                  <div class="mb-4">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">浮水印位置</label>
+
+                    <!-- 3x3（文字） -->
+                    <div id="textPositionGrid" class="position-grid position-grid-3x3">
+                      <!-- row 1 -->
+                      <label class="position-radio-label" title="Top Left (1,1)"><input type="radio" name="position" value="r1c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top Center (1,2)"><input type="radio" name="position" value="r1c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top Right (1,3)"><input type="radio" name="position" value="r1c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 2 -->
+                      <label class="position-radio-label" title="Middle Left (2,1)"><input type="radio" name="position" value="r2c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Middle Center (2,2)"><input type="radio" name="position" value="r2c2" class="hidden" checked onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Middle Right (2,3)"><input type="radio" name="position" value="r2c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 3 -->
+                      <label class="position-radio-label" title="Bottom Left (3,1)"><input type="radio" name="position" value="r3c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom Center (3,2)"><input type="radio" name="position" value="r3c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom Right (3,3)"><input type="radio" name="position" value="r3c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                    </div>
+
+                    <!-- 5x5（LOGO） -->
+                    <div id="imagePositionGrid" class="position-grid position-grid-5x5 hidden">
+                      <!-- row 1 -->
+                      <label class="position-radio-label" title="Top Left (1,1)"><input type="radio" name="position" value="r1c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top (1,2)"><input type="radio" name="position" value="r1c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top Center (1,3)"><input type="radio" name="position" value="r1c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top (1,4)"><input type="radio" name="position" value="r1c4" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Top Right (1,5)"><input type="radio" name="position" value="r1c5" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 2 -->
+                      <label class="position-radio-label" title="Left (2,1)"><input type="radio" name="position" value="r2c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="2,2"><input type="radio" name="position" value="r2c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="2,3"><input type="radio" name="position" value="r2c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="2,4"><input type="radio" name="position" value="r2c4" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Right (2,5)"><input type="radio" name="position" value="r2c5" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 3 -->
+                      <label class="position-radio-label" title="Middle Left (3,1)"><input type="radio" name="position" value="r3c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="3,2"><input type="radio" name="position" value="r3c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Middle Center (3,3)"><input type="radio" name="position" value="r3c3" class="hidden" checked onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="3,4"><input type="radio" name="position" value="r3c4" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Middle Right (3,5)"><input type="radio" name="position" value="r3c5" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 4 -->
+                      <label class="position-radio-label" title="Left (4,1)"><input type="radio" name="position" value="r4c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="4,2"><input type="radio" name="position" value="r4c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="4,3"><input type="radio" name="position" value="r4c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="4,4"><input type="radio" name="position" value="r4c4" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Right (4,5)"><input type="radio" name="position" value="r4c5" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <!-- row 5 -->
+                      <label class="position-radio-label" title="Bottom Left (5,1)"><input type="radio" name="position" value="r5c1" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom (5,2)"><input type="radio" name="position" value="r5c2" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom Center (5,3)"><input type="radio" name="position" value="r5c3" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom (5,4)"><input type="radio" name="position" value="r5c4" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                      <label class="position-radio-label" title="Bottom Right (5,5)"><input type="radio" name="position" value="r5c5" class="hidden" onchange="applyWatermark()"><span class="w-2 h-2 rounded-full border border-gray-500"></span></label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 步驟 3: 下載按鈕 -->
+              <button id="downloadBtn" onclick="downloadWatermarkedImage()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-xl shadow-lg transition duration-150 ease-in-out disabled:opacity-50 flex items-center justify-center space-x-2" disabled>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                <span>下載浮水印圖片</span>
+              </button>
+
+              <p id="errorMessage" class="mt-4 text-red-600 hidden font-medium text-sm p-3 bg-red-100 rounded-lg"></p>
+            </div>
+
+            <!-- 右側預覽 -->
+            <div class="lg:col-span-2">
+              <h2 class="text-xl font-bold text-gray-800 mb-4">3. 實時處理結果預覽</h2>
+              <div id="previewContainer" class="bg-gray-100 p-6 flex justify-center items-center rounded-xl min-h-[300px] border border-gray-300">
+                <p id="placeholderText" class="text-gray-500 text-center">
+                  請先上傳圖片。<br>圖片將以原始解析度進行處理。
+                </p>
+                <canvas id="outputCanvas" class="hidden"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 招募新店 CTA（與 frontdesk / backoffice 一樣） -->
+    <section id="contact" class="section cta-join" role="complementary" aria-labelledby="join-title">
+      <div class="container">
+        <h2 id="join-title">尚未申請加入 Uber Eats 嗎？</h2>
+        <p class="lead">立即填寫申請表單，由專人為您服務！</p>
+
+        <div class="cta-join-grid">
+          <div class="cta-card">
+            <h3>填寫申請表單</h3>
+            <p>請點擊下方按鈕填寫申請資料。</p>
+            <a class="btn btn-primary" href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="tutorial_apply_form">前往申請表單</a>
+          </div>
+
+          <div class="cta-card">
+            <h3>LINE 諮詢申辦</h3>
+            <p>一鍵加入官方 LINE，留下「店名」與專人即時諮詢。</p>
+            <a class="btn btn-ghost" href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="tutorial_line_new">加入 LINE</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 共用 Footer 掛載點 -->
+  <div id="site-footer"></div>
+
+  <!-- ===== 浮水印 JS 邏輯（原本那段，未動演算法） ===== -->
+  <script>
+    const imageUpload = document.getElementById('imageUpload');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const fileNameDisplay = document.getElementById('fileNameDisplay');
+    const placeholderText = document.getElementById('placeholderText');
+    const outputCanvas = document.getElementById('outputCanvas');
+    const errorMessage = document.getElementById('errorMessage');
+    
+    // Settings elements
+    const watermarkText = document.getElementById('watermarkText');
+    const watermarkColor = document.getElementById('watermarkColor');
+    const watermarkOpacity = document.getElementById('watermarkOpacity');
+    const watermarkSize = document.getElementById('watermarkSize');
+    const watermarkRotation = document.getElementById('watermarkRotation'); 
+    const positionRadios = document.getElementsByName('position');
+    
+    // Display elements
+    const opacityValueSpan = document.getElementById('opacityValue');
+    const sizeValueSpan = document.getElementById('sizeValue');
+    const rotationValueSpan = document.getElementById('rotationValue'); 
+    const textSettingsDiv = document.getElementById('textWatermarkSettings');
+    const imageSettingsDiv = document.getElementById('imageWatermarkSettings');
+    const logoUpload = document.getElementById('logoUpload');
+    const logoFileNameDisplay = document.getElementById('logoFileNameDisplay');
+    const textPositionGrid = document.getElementById('textPositionGrid');
+    const imagePositionGrid = document.getElementById('imagePositionGrid');
+
+    const ctx = outputCanvas.getContext('2d');
+
+    // State
+    let originalImage = null;
+    let originalFileName = 'watermarked_image';
+    let watermarkMode = 'text';
+    let logoImage = null;
+
+    // 初始化顯示值
+    document.addEventListener('DOMContentLoaded', () => {
+      opacityValueSpan.textContent = `${Math.round(watermarkOpacity.value * 100)}%`;
+      rotationValueSpan.textContent = `${watermarkRotation.value}°`;
+      watermarkSize.max = 20;
+      sizeValueSpan.textContent = `${watermarkSize.value}%`;
+      const defaultTextCenterRadio = document.querySelector('input[name="position"][value="r2c2"]');
+      if (defaultTextCenterRadio) defaultTextCenterRadio.checked = true;
+    });
+
+    function displayError(message) {
+      errorMessage.textContent = '處理錯誤: ' + message;
+      errorMessage.classList.remove('hidden');
+    }
+    function clearError() {
+      errorMessage.classList.add('hidden');
+      errorMessage.textContent = '';
+    }
+
+    function updateOpacityValue() {
+      opacityValueSpan.textContent = `${Math.round(watermarkOpacity.value * 100)}%`;
+      applyWatermark();
+    }
+    function updateSizeValue() {
+      sizeValueSpan.textContent = `${watermarkSize.value}%`;
+      applyWatermark();
+    }
+    function updateRotationValue() {
+      rotationValueSpan.textContent = `${watermarkRotation.value}°`;
+      applyWatermark();
+    }
+
+    function switchWatermarkMode(mode) {
+      watermarkMode = mode;
+      let maxVal;
+      let targetCenterValue;
+
+      if (mode === 'text') {
+        textSettingsDiv.classList.remove('hidden');
+        imageSettingsDiv.classList.add('hidden');
+        textPositionGrid.classList.remove('hidden');
+        imagePositionGrid.classList.add('hidden');
+        maxVal = 20;
+        targetCenterValue = 'r2c2';
+      } else {
+        textSettingsDiv.classList.add('hidden');
+        imageSettingsDiv.classList.remove('hidden');
+        textPositionGrid.classList.add('hidden');
+        imagePositionGrid.classList.remove('hidden');
+        maxVal = 200;
+        targetCenterValue = 'r3c3';
+      }
+
+      watermarkSize.max = maxVal;
+      if (parseFloat(watermarkSize.value) > maxVal) {
+        if (parseFloat(watermarkSize.value) > 20) {
+          watermarkSize.value = 20;
+        }
+      }
+
+      const targetRadio = document.querySelector(`input[name="position"][value="${targetCenterValue}"]`);
+      if (targetRadio) {
+        positionRadios.forEach(radio => radio.checked = false);
+        targetRadio.checked = true;
+      }
+
+      updateSizeValue();
+    }
+
+    function handleLogoUpload(event) {
+      clearError();
+      const file = event.target.files[0];
+      logoImage = null;
+      logoFileNameDisplay.textContent = '';
+      if (!file) return;
+
+      logoFileNameDisplay.textContent = `已選取 LOGO: ${file.name}`;
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          logoImage = img;
+          applyWatermark();
+        };
+        img.onerror = () => {
+          displayError('LOGO圖片載入失敗，請檢查檔案是否正確。');
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function handleImageUpload(event) {
+      clearError();
+      const file = event.target.files[0];
+
+      if (!file) {
+        originalImage = null;
+        downloadBtn.disabled = true;
+        fileNameDisplay.textContent = '';
+        placeholderText.classList.remove('hidden');
+        outputCanvas.classList.add('hidden');
+        return;
+      }
+
+      if (!file.type.startsWith('image/')) {
+        displayError('請上傳有效的圖片檔案 (PNG, JPG 或 WebP)。');
+        return;
+      }
+
+      if (file.size > 10 * 1024 * 1024) {
+        displayError('圖片檔案太大 (超過 10MB)，請嘗試較小的圖片。');
+        return;
+      }
+
+      originalFileName = file.name.substring(0, file.name.lastIndexOf('.')) || 'watermarked_image';
+      fileNameDisplay.textContent = `已選擇檔案: ${file.name}`;
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.onload = () => {
+          originalImage = img;
+          placeholderText.classList.add('hidden');
+          outputCanvas.classList.remove('hidden');
+          downloadBtn.disabled = false;
+          applyWatermark();
+        };
+        img.onerror = () => {
+          displayError('圖片載入失敗，請檢查檔案是否損壞。');
+          originalImage = null;
+          downloadBtn.disabled = true;
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function calculatePosition(width, height, positionCode, padding, isTextMode) {
+      const row = parseInt(positionCode[1]);
+      const col = parseInt(positionCode[3]);
+      let x, y, textAlign, textBaseline;
+
+      if (isTextMode) {
+        const divisor = 2;
+        const ratioY = (row - 1) / divisor;
+        const ratioX = (col - 1) / divisor;
+        textAlign = (col === 1) ? 'left' : (col === 3) ? 'right' : 'center';
+        textBaseline = (row === 1) ? 'top' : (row === 3) ? 'bottom' : 'middle';
+        x = width * ratioX;
+        y = height * ratioY;
+        if (row === 1) y = padding;
+        else if (row === 3) y = height - padding;
+        if (col === 1) x = padding;
+        else if (col === 3) x = width - padding;
+      } else {
+        const divisor = 4;
+        const ratioY = (row - 1) / divisor;
+        const ratioX = (col - 1) / divisor;
+        textAlign = (col === 1) ? 'left' : (col === 5) ? 'right' : 'center';
+        textBaseline = (row === 1) ? 'top' : (row === 5) ? 'bottom' : 'middle';
+        x = width * ratioX;
+        y = height * ratioY;
+        if (row === 1) y = padding;
+        else if (row === 5) y = height - padding;
+        if (col === 1) x = padding;
+        else if (col === 5) x = width - padding;
+      }
+      return { x, y, textAlign, textBaseline };
+    }
+
+    function applyWatermark() {
+      clearError();
+      if (!originalImage) return;
+
+      const width = originalImage.width;
+      const height = originalImage.height;
+      outputCanvas.width = width;
+      outputCanvas.height = height;
+      outputCanvas.style.maxWidth = '100%';
+      outputCanvas.style.height = 'auto';
+
+      ctx.clearRect(0, 0, width, height);
+      ctx.drawImage(originalImage, 0, 0, width, height);
+
+      const sizeMultiplier = parseFloat(watermarkSize.value) / 100;
+      const rotationDegrees = parseFloat(watermarkRotation.value);
+      const selectedPositionInput = Array.from(positionRadios).find(r => r.checked);
+      const selectedPosition = selectedPositionInput
+        ? selectedPositionInput.value
+        : (watermarkMode === 'text' ? 'r2c2' : 'r3c3');
+      const opacity = parseFloat(watermarkOpacity.value);
+      const isTextMode = watermarkMode === 'text';
+
+      if (isTextMode && !watermarkText.value.trim()) return;
+      if (!isTextMode && !logoImage) return;
+
+      ctx.globalAlpha = opacity;
+
+      const baseSizeForPadding = isTextMode
+        ? Math.max(16, Math.floor(height * sizeMultiplier))
+        : Math.max(30, width * sizeMultiplier * 0.5);
+
+      const padding = Math.max(baseSizeForPadding * 0.8, 30);
+      const pos = calculatePosition(width, height, selectedPosition, padding, isTextMode);
+
+      ctx.save();
+      ctx.translate(pos.x, pos.y);
+      ctx.rotate(rotationDegrees * Math.PI / 180);
+
+      if (isTextMode) {
+        const text = watermarkText.value.trim();
+        const color = watermarkColor.value;
+        const baseFontSize = Math.max(16, Math.floor(height * sizeMultiplier));
+        ctx.fillStyle = color;
+        ctx.font = `bold ${baseFontSize}px 'Noto Sans TC', Inter, sans-serif`;
+        ctx.textAlign = pos.textAlign;
+        ctx.textBaseline = pos.textBaseline;
+        ctx.fillText(text, 0, 0);
+      } else if (logoImage) {
+        const targetWidth = width * sizeMultiplier;
+        const targetHeight = logoImage.height * (targetWidth / logoImage.width);
+        let drawX = 0, drawY = 0;
+
+        if (pos.textAlign === 'center') drawX = -targetWidth / 2;
+        else if (pos.textAlign === 'right') drawX = -targetWidth;
+        if (pos.textBaseline === 'middle') drawY = -targetHeight / 2;
+        else if (pos.textBaseline === 'bottom') drawY = -targetHeight;
+
+        ctx.drawImage(logoImage, drawX, drawY, targetWidth, targetHeight);
+      }
+
+      ctx.restore();
+      ctx.globalAlpha = 1.0;
+    }
+
+    function downloadWatermarkedImage() {
+      clearError();
+      if (!originalImage) {
+        displayError('沒有可下載的圖片。請先上傳圖片。');
+        return;
+      }
+      applyWatermark();
+      outputCanvas.toBlob((blob) => {
+        if (!blob) {
+          displayError('無法將圖片轉換為下載檔案。');
+          return;
+        }
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.style.display = 'none';
+        a.href = url;
+        a.download = `${originalFileName}_wm.jpg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      }, 'image/jpeg', 0.9);
+    }
+
+    watermarkText.addEventListener('input', applyWatermark);
+    watermarkColor.addEventListener('input', applyWatermark);
+    watermarkOpacity.addEventListener('input', updateOpacityValue);
+    watermarkSize.addEventListener('input', updateSizeValue);
+    watermarkRotation.addEventListener('input', updateRotationValue);
+  </script>
+</body>
+</html>
