@@ -169,6 +169,7 @@
     function go(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
 
     document.addEventListener('DOMContentLoaded', ()=>{
+
       // 1) 動態載入共用 Header
       const mount = document.getElementById('site-header');
       if (mount) {
@@ -178,7 +179,6 @@
             mount.innerHTML = html;
 
             // 1.1 高亮目前頁面：「前台教學」
-            // 依你的 header.html：找到 data-cta="nav_front" 或連到 /delivery/frontdesk/ 的連結
             const frontLink = mount.querySelector('[data-cta="nav_front"], a[href="https://foodalliance.github.io/delivery/frontdesk/"], a[href="/delivery/frontdesk/"]');
             if (frontLink) {
               frontLink.setAttribute('aria-current','page');
@@ -190,7 +190,18 @@
           });
       }
 
-      // 2) 事件代理：手機漢堡選單 + CTA 打點
+      // 2) 動態載入共用 Footer
+      const footerMount = document.getElementById('site-footer');
+      if (footerMount) {
+        fetch('/delivery/shared/footer.html')
+          .then(res => res.text())
+          .then(html => { footerMount.innerHTML = html; })
+          .catch(() => {
+            footerMount.innerHTML = '<div style="padding:12px;background:#fee2e2;color:#b91c1c;border-radius:8px;">Footer 載入失敗，請檢查 /delivery/shared/footer.html</div>';
+          });
+      }
+
+      // 3) 事件代理：手機漢堡選單 + CTA 打點
       document.addEventListener('click', e=>{
         const ham = e.target.closest('.hamburger');
         const menu = document.getElementById('mainmenu');
@@ -293,7 +304,7 @@
             <p style="margin-top:15px;"><strong>若顯示「尚未完成設定」：</strong>代表門市尚未開通，請確認上線資料已送出並聯繫顧問或官方客服協助開通。</p>
           </div>
           <div class="media-image">
-            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/登入前台.jpg" alt="商家 App 登入畫面截圖">
+            <img src="https://raw.githubusercontent.com/foodalliance/delivery/main/frontdesk/image/%E7%99%BB%E5%85%A5%E5%89%8D%E5%8F%B0.jpg" alt="商家 App 登入畫面截圖">
           </div>
         </div>
 
@@ -400,13 +411,8 @@
     </section>
   </main>
 
-  <footer class="footer" role="contentinfo">
-    <div class="container smallprint">
-      <p><b>本服務協助店家上線 Uber Eats 平台</b>，流程透明；<b>個人資料僅用於申請與服務聯繫</b>。</p>
-      <p><b>免上架費</b>；商家費用與合約條款由 Uber Eats 依平台規定辦理，並依不同季度及行政區差異為您擇優。</p>
-      <p style="font-size:14px">服務範圍：台灣餐廳招募與上線輔導。</p>
-      <p style="font-size:14px">個資用途：僅用於 Uber Eats 申請與服務聯繫，不另作他用。</p>
-    </div>
-  </footer>
+  <!-- ✅ 共用 Footer 掛載點 -->
+  <div id="site-footer"></div>
+
 </body>
 </html>
