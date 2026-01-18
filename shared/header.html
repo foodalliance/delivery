@@ -1,65 +1,53 @@
-<!-- /delivery/shared/header.html -->
-<header class="header" role="banner">
-  <div class="container nav">
-    <!-- 點 Logo 也回 Home 首頁 -->
-    <a class="brand" href="https://foodalliance.github.io/Home/" aria-label="返回首頁">
-      <div class="logo" aria-hidden="true" style="width:34px;height:34px;border-radius:9px;overflow:hidden;background:transparent;color:transparent;display:grid;place-items:center">
-        <img src="https://raw.githubusercontent.com/foodalliance/Home/main/images/LOGO/%E9%A4%90%E8%81%AFLOGO.png"
-             alt="餐聯顧問 Logo" width="34" height="34"
-             style="display:block;width:34px;height:34px;object-fit:cover">
-      </div>
-      <span>餐聯顧問 × UberEats 授權合作</span>
-    </a>
+<!-- header.html (override version) -->
+<!-- A1 Archived Notice Banner + your existing header/nav -->
 
-    <button class="hamburger" aria-controls="mainmenu" aria-expanded="false" aria-label="主選單切換">☰</button>
+<style>
+  /* ===== Archived banner (A1) ===== */
+  #archived-banner {
+    padding: 12px 16px;
+    border: 1px solid rgba(0,0,0,.12);
+    border-left-width: 6px;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  #archived-banner a { text-decoration: underline; }
+  #archived-banner .archived-banner-en {
+    margin-top: 6px;
+    font-size: 12px;
+    opacity: .85;
+  }
 
-    <nav aria-label="主選單">
-      <ul class="menu" id="mainmenu">
-        <!-- 導向 Home 專案首頁 -->
-        <li><a href="https://foodalliance.github.io/Home/" data-cta="nav_home">首頁</a></li>
+  /* ===== Optional: keep banner above sticky headers ===== */
+  #archived-banner { position: relative; z-index: 9999; }
+</style>
 
-        <!-- UberEats 下拉選單 -->
-        <li>
-          <a href="#" aria-haspopup="true" aria-expanded="false">UberEats ▾</a>
-          <div class="submenu" role="menu" aria-label="UberEats 子選單">
-            <a href="/delivery/" data-cta="nav_quickjoin">快速加入</a>
-            <a href="/delivery/frontdesk/" data-cta="nav_front">前台教學</a>
-            <a href="/delivery/backend/" data-cta="nav_back">後台教學</a>
-            <a href="javascript:void(0)" data-cta="nav_support">各類客服</a>
-          </div>
-        </li>
+<section id="archived-banner" role="note" aria-label="Archived notice">
+  <p>
+    <strong>【公告｜Archived】</strong>本 GitHub Pages 頁面為歷史版本存檔，<strong>不再作為任何廣告投放或主要對外資訊頁</strong>。<br>
+    最新資訊、聯絡方式與隱私權政策請以
+    <a href="https://tw-delivery.com/" target="_blank" rel="noopener">https://tw-delivery.com/</a>
+    為準（Privacy Policy:
+    <a href="https://tw-delivery.com/privacy-policy/" target="_blank" rel="noopener">https://tw-delivery.com/privacy-policy/</a>）。<br>
+    本頁由<strong>小明企業社</strong>提供之資訊僅用於說明商家招募上架流程協助服務，<strong>非 Uber Eats 官方網站或客服</strong>。
+  </p>
+  <p class="archived-banner-en">
+    <strong>Archived notice:</strong> This site is kept for archival purposes and is not used for advertising. Please refer to tw-delivery.com.
+  </p>
+</section>
 
-        <!-- 申請表單 -->
-        <li>
-          <a href="https://forms.gle/xYbE3sHyHGh6vvdy9" target="_blank" rel="noopener" data-cta="nav_form">
-            申請表單
-          </a>
-        </li>
+<header class="site-header" role="banner">
+  <!-- =======================================================
+       NAV START
+       把你原本 header.html 的導覽列(nav)內容，整段貼到這裡
+       ======================================================= -->
 
-        <!-- ✅ 新增：便利工具 下拉選單（浮水印生成器） -->
-        <li>
-          <a href="#" aria-haspopup="true" aria-expanded="false">便利工具 ▾</a>
-          <div class="submenu" role="menu" aria-label="便利工具 子選單">
-            <a href="https://foodalliance.github.io/delivery/watermark/" data-cta="nav_watermark">
-              浮水印生成器
-            </a>
-            <!-- 之後如果有更多工具，可以繼續在這裡往下加 -->
-          </div>
-        </li>
+  <!-- Example nav placeholder (replace with your real nav) -->
+  <nav class="site-nav" aria-label="Main navigation">
+    <!-- Replace everything inside this nav with your existing menu -->
+  </nav>
 
-        <!-- LINE / 異業結盟 -->
-        <li>
-          <a href="https://lin.ee/BhAYZtu" target="_blank" rel="noopener" data-cta="nav_line">
-            加入 LINE
-          </a>
-        </li>
-        <li>
-          <a href="https://docs.google.com/forms/d/e/1FAIpQLSd20-87whz1JpbqiurlwyHC1Gt5tX1wW39G7FXX43NmnC_j9w/viewform"
-             data-cta="nav_partners">
-            異業結盟
-          </a>
-        </li>
-      </ul>
-    </nav>
-  </div>
+  <!-- =======================================================
+       NAV END
+       ======================================================= -->
 </header>
