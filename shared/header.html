@@ -1,50 +1,128 @@
-<!-- header.html (override version) -->
-<!-- A1 Archived Notice Banner + your existing header/nav -->
+<!-- header.html (ARCHIVED OVERLAY VERSION) -->
 
 <style>
-  /* ===== Archived banner (A1) ===== */
-  #archived-banner {
-    padding: 12px 16px;
-    border: 1px solid rgba(0,0,0,.12);
-    border-left-width: 6px;
-    margin: 0;
-    font-size: 14px;
-    line-height: 1.5;
+  /* ===== Full-screen archived overlay ===== */
+  #archived-overlay {
+    position: fixed;
+    inset: 0;
+    background: #fff;
+    z-index: 2147483647; /* very high */
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow: auto;
+    border-top: 6px solid #d93025;
   }
-  #archived-banner a { text-decoration: underline; }
-  #archived-banner .archived-banner-en {
-    margin-top: 6px;
+  .archived-card {
+    width: min(960px, 100%);
+    border: 1px solid rgba(0,0,0,.12);
+    border-radius: 10px;
+    padding: 18px 18px 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  }
+  .archived-title {
+    margin: 0 0 10px;
+    font-size: 16px;
+    line-height: 1.4;
+  }
+  .archived-title strong { color: #d93025; }
+  .archived-body {
+    margin: 0 0 12px;
+    font-size: 14px;
+    line-height: 1.65;
+    color: #202124;
+  }
+  .archived-body a { text-decoration: underline; }
+  .archived-en {
+    margin: 10px 0 0;
     font-size: 12px;
     opacity: .85;
   }
+  .archived-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+  }
+  .btn-primary, .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 14px;
+    border: 1px solid rgba(0,0,0,.12);
+    cursor: pointer;
+    text-decoration: none;
+    user-select: none;
+  }
+  .btn-primary {
+    background: #1a73e8;
+    color: #fff;
+    border-color: #1a73e8;
+  }
+  .btn-secondary {
+    background: #fff;
+    color: #202124;
+  }
+  .archived-footnote {
+    margin-top: 10px;
+    font-size: 12px;
+    color: rgba(32,33,36,.75);
+    line-height: 1.55;
+  }
 
-  /* ===== Optional: keep banner above sticky headers ===== */
-  #archived-banner { position: relative; z-index: 9999; }
+  /* ===== Optional: keep existing header/nav visible after dismiss ===== */
+  header.site-header { position: relative; z-index: 1; }
 </style>
 
-<section id="archived-banner" role="note" aria-label="Archived notice">
-  <p>
-    <strong>【公告｜Archived】</strong>本 GitHub Pages 頁面為歷史版本存檔，<strong>不再作為任何廣告投放或主要對外資訊頁</strong>。<br>
-    最新資訊、聯絡方式與隱私權政策請以
-    <a href="https://tw-delivery.com/" target="_blank" rel="noopener">https://tw-delivery.com/</a>
-    為準（Privacy Policy:
-    <a href="https://tw-delivery.com/privacy-policy/" target="_blank" rel="noopener">https://tw-delivery.com/privacy-policy/</a>）。<br>
-    本頁由<strong>小明企業社</strong>提供之資訊僅用於說明商家招募上架流程協助服務，<strong>非 Uber Eats 官方網站或客服</strong>。
-  </p>
-  <p class="archived-banner-en">
-    <strong>Archived notice:</strong> This site is kept for archival purposes and is not used for advertising. Please refer to tw-delivery.com.
-  </p>
-</section>
+<div id="archived-overlay" role="dialog" aria-modal="true" aria-label="Archived notice">
+  <div class="archived-card">
+    <h1 class="archived-title">
+      <strong>【公告｜Archived】</strong>本 GitHub Pages 為歷史版本存檔，已停止作為主要對外資訊頁與任何廣告投放落地頁
+    </h1>
+
+    <p class="archived-body">
+      最新資訊、聯絡方式與隱私權政策，請以
+      <a href="https://tw-delivery.com/" target="_blank" rel="noopener">https://tw-delivery.com/</a>
+      為準（Privacy Policy：
+      <a href="https://tw-delivery.com/privacy-policy/" target="_blank" rel="noopener">https://tw-delivery.com/privacy-policy/</a>）。
+      <br><br>
+      本頁由<strong>小明企業社</strong>提供之資訊僅用於歷史存檔與流程說明參考，
+      <strong>非 Uber Eats 官方網站、非官方客服、亦不提供任何廣告代操服務</strong>。
+    </p>
+
+    <p class="archived-en">
+      <strong>Archived notice:</strong> This GitHub Pages site is kept for archival reference and is not used for advertising.
+      Please visit <a href="https://tw-delivery.com/" target="_blank" rel="noopener">tw-delivery.com</a>.
+    </p>
+
+    <div class="archived-actions">
+      <a class="btn-primary" href="https://tw-delivery.com/" target="_blank" rel="noopener">
+        前往新站 tw-delivery.com
+      </a>
+      <button class="btn-secondary" type="button" onclick="document.getElementById('archived-overlay').style.display='none';">
+        查看存檔內容（我已了解）
+      </button>
+    </div>
+
+    <div class="archived-footnote">
+      提醒：若您是從舊連結或舊廣告到達此頁，請改以前往新站為主。本存檔頁僅保留舊內容供參考。
+    </div>
+  </div>
+</div>
 
 <header class="site-header" role="banner">
   <!-- =======================================================
        NAV START
-       把你原本 header.html 的導覽列(nav)內容，整段貼到這裡
+       把你原本 header.html 的導覽列(nav)內容貼到這裡
        ======================================================= -->
 
   <!-- Example nav placeholder (replace with your real nav) -->
   <nav class="site-nav" aria-label="Main navigation">
-    <!-- Replace everything inside this nav with your existing menu -->
+    <!-- Replace with your existing menu -->
   </nav>
 
   <!-- =======================================================
